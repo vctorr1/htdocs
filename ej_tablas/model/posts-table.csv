@@ -1,0 +1,11 @@
+id,user_id,imagen_url,descripcion,fecha_publicacion,likes,comentarios,categoria
+1,1,http://ejemplo.com/img1.jpg,"Delicioso sushi casero",2024-03-15,250,30,japonesa
+2,2,http://ejemplo.com/img2.jpg,"Pasta al pesto con albahaca fresca",2024-03-16,180,15,italiana
+3,3,http://ejemplo.com/img3.jpg,"Ensalada de quinoa y aguacate",2024-03-17,120,8,saludable
+4,4,http://ejemplo.com/img4.jpg,"Tarta de chocolate y frambuesas",2024-03-18,300,45,postres
+5,5,http://ejemplo.com/img5.jpg,"Bowl de buddha vegano",2024-03-19,200,25,vegana
+6,1,http://ejemplo.com/img6.jpg,"Tacos al pastor",2024-03-20,280,35,mexicana
+7,2,http://ejemplo.com/img7.jpg,"Risotto de hongos silvestres",2024-03-21,150,12,italiana
+8,3,http://ejemplo.com/img8.jpg,"Smoothie bowl de açaí",2024-03-22,100,10,saludable
+9,4,http://ejemplo.com/img9.jpg,"Macarons de lavanda",2024-03-23,220,28,postres
+10,5,http://ejemplo.com/img10.jpg,"Curry de garbanzos",2024-03-24,180,20,vegana
