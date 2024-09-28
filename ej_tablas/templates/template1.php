@@ -9,6 +9,9 @@
 
 </head>
 <body>
-    <?=$bodyOutput;?>
+    <h1>Datos de los archivos CSV</h1>
+    <?php
+    echo $joinedTable;
+    ?>
 </body>
 </html>
