@@ -1,24 +1,19 @@
 <?php
-// Configuración de errores para desarrollo
+//Configuración de errores
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Incluir archivos necesarios
-require_once __DIR__ . '/app/vars.php';
-require_once __DIR__ . '/app/functions.php';
+//Importamos los archivo necesariosw
+include_once('app/vars.php');
+include_once('app/functions.php');
 
-// Verificar si las funciones requeridas están definidas
-if (!function_exists('getDataFromCSV') || !function_exists('generateJoinedTableMarkup')) {
-    die("Error: Las funciones requeridas no están definidas. Verifica el archivo functions.php");
-}
+//Almacenamos los datos de cada csv en una variable para su manejo poesteriormente
+$usersData = getDataFromCSV('model/users-table.csv');
+$postsData = getDataFromCSV('model/posts-table.csv');
 
-// Obtener datos de los archivos CSV
-$usersData = getDataFromCSV($usersFile);
-$postsData = getDataFromCSV($postsFile);
+//generamos el lenguaje de marcas a partir del los datos almacenados
+$joinedTable = getMarkup($usersData, $postsData);
 
-// Generar el markup HTML para la tabla unida
-$joinedTable = generateJoinedTableMarkup($usersData, $postsData);
-
-// Incluir la plantilla para mostrar los resultados
-require_once __DIR__ . '/templates/template1.php';
+//Incluimos la plantilla para mostrar los resultados
+include('templates/template1.php');
 ?>

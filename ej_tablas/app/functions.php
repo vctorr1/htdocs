@@ -1,29 +1,30 @@
 <?php
 /**
- * Lee datos de un archivo CSV y los devuelve como un array asociativo.
+ *Lee datos de un archivo CSV y los devuelve como un array asociativo.
  */
 function getDataFromCSV($filename) {
     $data = [];
     if (($handle = fopen($filename, "r")) !== FALSE) {
-        // Leer la primera fila como encabezados
+        //Lee la primera fila como encabezados
         $headers = fgetcsv($handle, 1000, ",");
-        // Leer el resto de las filas
+        //leer el resto de las filas
         while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
-            // Combinar encabezados con valores para crear un array asociativo
+            //Combina los encabezados con valores para crear un array asociativo
             $data[] = array_combine($headers, $row);
         }
+        //Cerramos el flujo
         fclose($handle);
     }
     return $data;
 }
 
 /**
- * Genera el markup HTML para una tabla que combina datos de usuarios y posts.
+ *Genera el html para una tabla que combina datos de usuarios y posts.
  */
-function generateJoinedTableMarkup($usersData, $postsData) {
+function getMarkup($usersData, $postsData) {
     $markup = "<table border='1'>";
     
-    // Añadir encabezados de la tabla
+    //Añadir encabezados de la tabla
     $markup .= "<tr>
         <th>User ID</th>
         <th>Username</th>
@@ -41,15 +42,15 @@ function generateJoinedTableMarkup($usersData, $postsData) {
         <th>Categoría</th>
     </tr>";
 
-    // Iterar sobre cada usuario
+    //Iterar sobre cada usuario
     foreach ($usersData as $user) {
-        // Filtrar posts para el usuario actual
+        //Filtrar posts para el usuario actual usando array_filter
         $userPosts = array_filter($postsData, function($post) use ($user) {
             return $post['user_id'] == $user['id'];
         });
 
         if (empty($userPosts)) {
-            // Si el usuario no tiene posts, mostrar una fila con datos del usuario y "Sin posts"
+            //Si el usuario no tiene posts, mostrar una fila con datos del usuario y "Sin posts"
             $markup .= "<tr>
                 <td>" . htmlspecialchars($user['id']) . "</td>
                 <td>" . htmlspecialchars($user['username']) . "</td>
@@ -61,12 +62,12 @@ function generateJoinedTableMarkup($usersData, $postsData) {
                 <td colspan='7'>Sin posts</td>
             </tr>";
         } else {
-            // Si el usuario tiene posts, mostrar una fila por cada post
+            //Si el usuario tiene posts, mostrar una fila por cada post
             $firstPost = true;
             foreach ($userPosts as $post) {
                 $markup .= "<tr>";
                 if ($firstPost) {
-                    // Para el primer post, mostrar los datos del usuario
+                    //para el primer post, mostrar los datos del usuario
                     $markup .= "
                         <td>" . htmlspecialchars($user['id']) . "</td>
                         <td>" . htmlspecialchars($user['username']) . "</td>
@@ -77,10 +78,10 @@ function generateJoinedTableMarkup($usersData, $postsData) {
                         <td>" . htmlspecialchars($user['bio']) . "</td>";
                     $firstPost = false;
                 } else {
-                    // Para los posts subsiguientes, dejar en blanco las columnas de usuario
+                    //Para los posts siguientes, dejar en blanco las columnas de usuario
                     $markup .= "<td colspan='7'></td>";
                 }
-                // Mostrar los datos del post
+                //mostrar los datos del post
                 $markup .= "
                     <td>" . htmlspecialchars($post['id']) . "</td>
                     <td><img src='" . htmlspecialchars($post['imagen_url']) . "' alt='imagen' style='max-width:100px;'></td>
