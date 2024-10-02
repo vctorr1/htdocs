@@ -4,28 +4,60 @@
  */
 function getDataFromCSV($filename) {
     $data = [];
-    if (($handle = fopen($filename, "r")) !== FALSE) {
+    if (($csv = fopen($filename, "r")) !== FALSE) {
         //Lee la primera fila como encabezados
-        $headers = fgetcsv($handle, 1000, ",");
+        $headers = fgetcsv($csv, 1000, ",");
         //leer el resto de las filas
-        while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        while (($row = fgetcsv($csv, 1000, ",")) !== FALSE) {
             //Combina los encabezados con valores para crear un array asociativo
             $data[] = array_combine($headers, $row);
         }
         //Cerramos el flujo
-        fclose($handle);
+        fclose($csv);
     }
     return $data;
 }
+
+//Ejemplo de Jose Luis
+/*function getArrayFromCSV1($csvUrl){
+    //Devuelve un array asociativo con la información contenida en la url que se le pasa como parámetro
+    dump($csvUrl);
+    dump("+++++++++++++++++++++++++++++");
+    $filas = explode("\n",file_get_contents($csvUrl));
+    dump($filas);
+    dump("+++++++++++++++++++++++++++++");
+    array_shift($filas);
+    dump("filas despues");
+    dump("+++++++++++++++++++++++++++++");
+    dump($nombreCols);
+    dump("nombre columnas");
+
+    array_walk($filas, 'divide_columnas', $nombreCols);
+    dump("+++++++++++++++++++++++++++++");
+    
+    dump($filas);
+    
+
+
+
+}   //el ampersand se usa para que los cambios realziados dentro de la variable fila persistan por fuera
+function divide_columnas(&$arrayItem, $key, $nombreCols){
+    dump($arrayItem);
+    dump($key);
+    dump("$nombreCols")
+    $arrayItem = array_combine($nombreCols, explode(",", $arrayItem));
+    dump("+++++++++++++++++++++++++++++");
+    
+}*/
 
 /**
  *Genera el html para una tabla que combina datos de usuarios y posts.
  */
 function getMarkup($usersData, $postsData) {
-    $markup = "<table border='1'>";
+    $html = "<table>";
     
     //Añadir encabezados de la tabla
-    $markup .= "<tr>
+    $html .= "<tr>
         <th>User ID</th>
         <th>Username</th>
         <th>Email</th>
@@ -40,62 +72,58 @@ function getMarkup($usersData, $postsData) {
         <th>Likes</th>
         <th>Comentarios</th>
         <th>Categoría</th>
-    </tr>";
+        </tr>";
 
-    //Iterar sobre cada usuario
+    //iteramos sobre cada usuario
+    //FUNCIÓN IMPORTANTE ARRAY_WALK(), QUE APLICA UNA FUNCIÓN A CADA ELEMENTO DE UN ARRAY
     foreach ($usersData as $user) {
-        //Filtrar posts para el usuario actual usando array_filter
+        //Filtramos posts para el usuario actual usando array_filter
         $userPosts = array_filter($postsData, function($post) use ($user) {
             return $post['user_id'] == $user['id'];
         });
 
-        if (empty($userPosts)) {
-            //Si el usuario no tiene posts, mostrar una fila con datos del usuario y "Sin posts"
-            $markup .= "<tr>
-                <td>" . htmlspecialchars($user['id']) . "</td>
-                <td>" . htmlspecialchars($user['username']) . "</td>
-                <td>" . htmlspecialchars($user['email']) . "</td>
-                <td>" . htmlspecialchars($user['fecha_registro']) . "</td>
-                <td>" . htmlspecialchars($user['seguidores']) . "</td>
-                <td>" . htmlspecialchars($user['siguiendo']) . "</td>
-                <td>" . htmlspecialchars($user['bio']) . "</td>
-                <td colspan='7'>Sin posts</td>
-            </tr>";
-        } else {
-            //Si el usuario tiene posts, mostrar una fila por cada post
-            $firstPost = true;
-            foreach ($userPosts as $post) {
-                $markup .= "<tr>";
+        
+        //Si el usuario tiene posts, mostramos una fila por cada post
+        $firstPost = true;
+        foreach ($userPosts as $post) {
+                $html .= "<tr>";
                 if ($firstPost) {
                     //para el primer post, mostrar los datos del usuario
-                    $markup .= "
-                        <td>" . htmlspecialchars($user['id']) . "</td>
-                        <td>" . htmlspecialchars($user['username']) . "</td>
-                        <td>" . htmlspecialchars($user['email']) . "</td>
-                        <td>" . htmlspecialchars($user['fecha_registro']) . "</td>
-                        <td>" . htmlspecialchars($user['seguidores']) . "</td>
-                        <td>" . htmlspecialchars($user['siguiendo']) . "</td>
-                        <td>" . htmlspecialchars($user['bio']) . "</td>";
+                    $html .= "
+                        <td>" .($user['id']) . "</td>
+                        <td>" .($user['username']) . "</td>
+                        <td>" .($user['email']) . "</td>
+                        <td>" .($user['fecha_registro']) . "</td>
+                        <td>" .($user['seguidores']) ."</td>
+                        <td>" .($user['siguiendo']) . "</td>
+                        <td>" .($user['bio']) . "</td>";
                     $firstPost = false;
                 } else {
                     //Para los posts siguientes, dejar en blanco las columnas de usuario
-                    $markup .= "<td colspan='7'></td>";
+                    $html .= "<td colspan=7></td>";
                 }
                 //mostrar los datos del post
-                $markup .= "
-                    <td>" . htmlspecialchars($post['id']) . "</td>
-                    <td><img src='" . htmlspecialchars($post['imagen_url']) . "' alt='imagen' style='max-width:100px;'></td>
-                    <td>" . htmlspecialchars($post['descripcion']) . "</td>
-                    <td>" . htmlspecialchars($post['fecha_publicacion']) . "</td>
-                    <td>" . htmlspecialchars($post['likes']) . "</td>
-                    <td>" . htmlspecialchars($post['comentarios']) . "</td>
-                    <td>" . htmlspecialchars($post['categoria']) . "</td>
+                $html .= "
+                    <td>" . ($post['id']) . "</td>
+                    <td><img src='" . ($post['imagen_url']) . "' alt='imagen''></td>
+                    <td>" . ($post['descripcion']) . "</td>
+                    <td>" . ($post['fecha_publicacion']) . "</td>
+                    <td>" . ($post['likes']) . "</td>
+                    <td>" . ($post['comentarios']) . "</td>
+                    <td>" . ($post['categoria']) . "</td>
                 </tr>";
-            }
+            
         }
     }
+    //Cerramos la tabla
+    $html .= "</table>";
+    return $html;
+}
 
-    $markup .= "</table>";
-    return $markup;
+//Versión alternatiav con array_walk
+
+
+function dump($var){
+    echo '<pre>'.print_r($var, true).'</pre>';
 }
 ?>
