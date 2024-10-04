@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escritorio Virtual Windows 95</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="desktop">
+        <!-- Iconos del escritorio -->
+        <div class="desktop-icon" data-program="my-computer">
+            <img src="images/icons/my_computer.png" alt="Mi PC">
+            <span>Mi PC</span>
+        </div>
+        <div class="desktop-icon" data-program="recycle-bin">
+            <img src="images/icons/recycle_bin.png" alt="Papelera de reciclaje">
+            <span>Papelera de reciclaje</span>
+        </div>
+        <div class="desktop-icon" data-program="notepad">
+            <img src="images/icons/notepad.png" alt="Bloc de notas">
+            <span>Bloc de notas</span>
+        </div>
+        <div class="desktop-icon" data-program="maps">
+            <img src="images/icons/maps.png" alt="Mapas">
+            <span>Mapas</span>
+        </div>
+        <div class="desktop-icon" data-program="minesweeper">
+            <img src="images/icons/minesweeper.png" alt="Buscaminas">
+            <span>Buscaminas</span>
+        </div>
+        <div class="desktop-icon" data-program="internet-explorer">
+            <img src="images/icons/internet-explorer.svg" alt="Internet Explorer">
+            <span>Internet Explorer</span>
+        </div>
+
+        <!-- Contenedor de ventanas -->
+        <div id="windows-container"></div>
+    </div>
+
+    <!-- Barra de tareas -->
+    <div id="taskbar" class="taskbar">
+        <button id="start-button" class="">
+            <img src="images/start_button.png" alt="Inicio">
+            Inicio
+        </button>
+        <div class="taskbar-time-container">
+            <div id="taskbarTime"></div>
+        </div>
+    </div>
+
+     <!-- Audio oculto en la página -->
+     <iframe src="sound/win95.mp3" allow="autoplay" style="display:none" id="sonido"></iframe>
+
+    <script src="js/desktop.js"></script>
+    <script src="js/window.js"></script>
+    <script src="js/taskbar.js"></script>
+    <script src="js/menus.js"></script>
+    <script src="js/minesweeper.js"></script>
+    <script src="js/sound.js"></script>
+    
+</body>
+</html>

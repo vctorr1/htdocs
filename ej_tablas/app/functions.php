@@ -120,7 +120,41 @@ function getMarkup($usersData, $postsData) {
     return $html;
 }
 
-//Versión alternatiav con array_walk
+//función para borrar todos los registros del csv ARREGLAR PARA QUE BORRE TODO EL ARCHIVO
+function deleteCSV($filename){
+    $arrayCSV = file($filename);
+    //Leemos las cabeceras
+    $headers =  str_getcsv(array_shift($arrayCSV));
+
+    //creamos el array asociativo para asignar los valores, siendo el primero la clave y el segundo el valor "" vacío en este caso
+    $empty_rows = array_fill_keys($headers, "");
+    //abrimos el archivo para escribir en él
+    $output_file = fopen($filename, "w");
+    //EScribimos en el csv los headers y los campos vacíos
+    fputcsv($output_file, $headers);
+    foreach($arrayCSV as $row) {
+        fputcsv($output_file, $empty_rows);
+    }
+    //Cerramos el flujo
+    fclose($output_file);
+
+}
+
+
+//Función para regenerar los registros del csv ARREGLAR PARA QUE SE CREE OTRA VEZ CON LOS DATOS
+function regenerateCSV($filename, array $data) {
+    //Abrimos el flujo de entrada con permiso de escritura
+    $output_file = fopen($filename, 'w');
+    //Introducimos en el archivo los registro de nuevo
+    fputcsv($output_file, array_keys(reset($data)));
+    array_walk($data, function($row) use ($output_file) {
+        fputcsv($output_file, $row);
+    });
+    //Cerramos el flujo
+    fclose($output_file);
+}
+
+
 
 
 function dump($var){

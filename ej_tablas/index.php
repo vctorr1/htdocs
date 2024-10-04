@@ -15,6 +15,11 @@ include_once('app/functions.php');
 $usersData = getDataFromCSV('model/users-table.csv');
 $postsData = getDataFromCSV('model/posts-table.csv');
 
+//Prueba deleteCSV
+deleteCSV('model/users-table1.csv'); 
+regenerateCSV('model/users-table1.csv', $usersData);
+
+
 //generamos el lenguaje de marcas a partir del los datos almacenados
 $finalTable = getMarkup($usersData, $postsData);
 
