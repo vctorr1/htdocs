@@ -121,7 +121,7 @@ function getMarkup($usersData, $postsData) {
 }
 
 //función para borrar todos los registros del csv ARREGLAR PARA QUE BORRE TODO EL ARCHIVO
-function deleteCSV($filename){
+function deleteCSV1($filename){
     $arrayCSV = file($filename);
     //Leemos las cabeceras
     $headers =  str_getcsv(array_shift($arrayCSV));

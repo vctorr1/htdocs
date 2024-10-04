@@ -12,6 +12,18 @@
     <h1>Usuarios y posts</h1>
     <?php
     echo $finalTable;
+    echo $deleteButton;
+    echo $restoreButton;
     ?>
+    <form action="/ej_tablas/app/deletecsv.php" method="post">
+        <label for="campo_texto"></label>
+        <input name="campo_texto" id="campo_texto" type="text">
+        <input type="submit" value="Borrar">
+    </form>
+    <form action="/ej_tablas/app/restorecsv.php" method="post">
+        <label for="campo_texto1"></label>
+        <input name="campo_texto1" id="campo_texto1" type="text">
+        <input type="submit" value="Restaurar">
+    </form>
 </body>
 </html>
