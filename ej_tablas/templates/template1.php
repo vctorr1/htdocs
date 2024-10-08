@@ -26,10 +26,10 @@
         <input name="campo_texto1" id="campo_texto1" type="text">
         <input type="submit" value="Restaurar">
     </form>
-    <form action="/ej_tablas/app/randomfile.php" method="post">
+    <form action="/ej_tablas/app/randomuser.php" method="post">
         <label for="campo_texto2"></label>
         <input name="campo_texto2" id="campo_texto2" type="text">
-        <input type="submit" value="Registro Aleatorio">
+        <input type="submit" value="Usuario Aleatorio">
     </form>
 </body>
 </html>
