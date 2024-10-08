@@ -13,4 +13,11 @@ function deleteCSV($filename){
 //Se ejecuta el método al acceder al script
 deleteCSV('../model/users-table1.csv');
 
+//Redirigimos de vuelta a la página principal
+header("Location: ../index.php");
+exit();
+
+
+
+
 

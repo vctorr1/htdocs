@@ -1,15 +1,13 @@
 <?php
-/**
- *Lee datos de un archivo CSV y los devuelve como un array asociativo.
- */
+//Leemos los datos de un archivo CSV y los devolvemos como un array asociativo.
 function getDataFromCSV($filename) {
     $data = [];
     if (($csv = fopen($filename, "r")) !== FALSE) {
-        //Lee la primera fila como encabezados
+        //leemos la primera fila como encabezados
         $headers = fgetcsv($csv, 1000, ",");
-        //leer el resto de las filas
+        //leemos el resto de las filas
         while (($row = fgetcsv($csv, 1000, ",")) !== FALSE) {
-            //Combina los encabezados con valores para crear un array asociativo
+            //combinamos los encabezados con valores para crear un array asociativo
             $data[] = array_combine($headers, $row);
         }
         //Cerramos el flujo
@@ -50,13 +48,12 @@ function divide_columnas(&$arrayItem, $key, $nombreCols){
     
 }*/
 
-/**
- *Genera el html para una tabla que combina datos de usuarios y posts.
- */
+//generamos el html para una tabla que combina datos de usuarios y posts
+ 
 function getMarkup($usersData, $postsData) {
     $html = "<table>";
     
-    //Añadir encabezados de la tabla
+    //Añadimos los encabezados de la tabla
     $html .= "<tr>
         <th>User ID</th>
         <th>Username</th>
@@ -120,43 +117,13 @@ function getMarkup($usersData, $postsData) {
     return $html;
 }
 
-//función para borrar todos los registros del csv ARREGLAR PARA QUE BORRE TODO EL ARCHIVO
-function deleteCSV1($filename){
-    $arrayCSV = file($filename);
-    //Leemos las cabeceras
-    $headers =  str_getcsv(array_shift($arrayCSV));
-
-    //creamos el array asociativo para asignar los valores, siendo el primero la clave y el segundo el valor "" vacío en este caso
-    $empty_rows = array_fill_keys($headers, "");
-    //abrimos el archivo para escribir en él
-    $output_file = fopen($filename, "w");
-    //EScribimos en el csv los headers y los campos vacíos
-    fputcsv($output_file, $headers);
-    foreach($arrayCSV as $row) {
-        fputcsv($output_file, $empty_rows);
-    }
-    //Cerramos el flujo
-    fclose($output_file);
-
+//función para cargar un registro aleatorio
+function getRandomField($postsData){
+    //Usamos la función array_rand para obtener un elemento aleatorio del array de datos del csv
+    $fieldArray = array_rand($postsData,1);
 }
 
-
-//Función para regenerar los registros del csv ARREGLAR PARA QUE SE CREE OTRA VEZ CON LOS DATOS
-function regenerateCSV($filename, array $data) {
-    //Abrimos el flujo de entrada con permiso de escritura
-    $output_file = fopen($filename, 'w');
-    //Introducimos en el archivo los registro de nuevo
-    fputcsv($output_file, array_keys(reset($data)));
-    array_walk($data, function($row) use ($output_file) {
-        fputcsv($output_file, $row);
-    });
-    //Cerramos el flujo
-    fclose($output_file);
-}
-
-
-
-
+//función dump para depuración
 function dump($var){
     echo '<pre>'.print_r($var, true).'</pre>';
 }

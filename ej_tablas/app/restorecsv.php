@@ -1,6 +1,6 @@
 <?php
 
-include_once("functions.php");
+include_once('functions.php');
 
 function restoreCSV($filename, array $data_array){
     //Abrimos flujo de entrada para escritura
@@ -16,4 +16,8 @@ function restoreCSV($filename, array $data_array){
 };
 //Se ejecuta el método al acceder al script
 restoreCSV("../model/users-table1.csv", getDataFromCSV("../model/users-table.csv"));
+
+//Redirigimos de vuelta a la página principal
+header("Location: ../index.php");
+exit();
 
