@@ -27,4 +27,6 @@ $restoreButton = '<a href="/ej_tablas/app/restorecsv.php">Restaurar</a>';
 
 //Incluimos la plantilla para mostrar los resultados
 include('templates/template1.php');
+
+//HAY QUE TERMINAR RANDOMFILE
 ?>

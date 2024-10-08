@@ -117,12 +117,6 @@ function getMarkup($usersData, $postsData) {
     return $html;
 }
 
-//función para cargar un registro aleatorio
-function getRandomField($postsData){
-    //Usamos la función array_rand para obtener un elemento aleatorio del array de datos del csv
-    $fieldArray = array_rand($postsData,1);
-}
-
 //función dump para depuración
 function dump($var){
     echo '<pre>'.print_r($var, true).'</pre>';
