@@ -96,7 +96,7 @@ function getMarkup($usersData, $postsData) {
                         <td>" .($user['bio']) . "</td>";
                     $firstPost = false;
                 } else {
-                    //Para los posts siguientes, dejar en blanco las columnas de usuario
+                    //Para los posts siguientes, dejamos en blanco las columnas de usuario
                     $html .= "<td colspan=7></td>";
                 }
                 //mostrar los datos del post

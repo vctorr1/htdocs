@@ -9,7 +9,7 @@ function getRandomUser($usersData){
     return $randomUser;
 }
 
-// Obtenemos los datos de los archivos CSV
+//Obtenemos los datos de los archivos CSV
 $usersData = getDataFromCSV("../model/users-table.csv");
 $postsData = getDataFromCSV("../model/posts-table.csv");
 
