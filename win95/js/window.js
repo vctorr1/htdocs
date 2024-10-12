@@ -48,7 +48,7 @@ class Window {
                 `;
             case 'internet-explorer':
                 return `
-                    <div class="browser-container">
+                    <div class="browser-container" style="width: 100%; height: 100%;">
                         <div class="browser-controls">
                             <button id="browser-back">←</button>
                             <button id="browser-forward">→</button>
@@ -56,7 +56,7 @@ class Window {
                             <input type="text" id="browser-url" placeholder="Ingrese una URL">
                             <button id="browser-go">Ir</button>
                         </div>
-                        <iframe id="browser-frame" src="https://es.wikipedia.org/wiki/Wikipedia:Portada" width="100%" height="calc(100% - 40px)" style="border: none;"></iframe>
+                        <iframe id="browser-frame" src="https://es.wikipedia.org/wiki/Wikipedia:Portada" width="100%" height="100%" style="border: none;"></iframe>
                     </div>
                 `;
             case 'notepad':
@@ -79,7 +79,7 @@ class Window {
                     </div>
                 `;
             case 'recycle-bin':
-                return `
+                return `    
                     <div class="recycle-bin">
                         <p>La papelera está vacía</p>
                         <button class="empty-bin">Vaciar papelera</button>
@@ -89,8 +89,8 @@ class Window {
                 return `<div id="minesweeper-game"></div>`;
             case 'solitaire':
                 return `
-                    <div class="solitaire-container">
-                        <iframe src="http://frvr.com/play/solitaire/" width="100%" height="100%" style="border: none;"></iframe>
+                    <div class="solitaire-container" style="width: 100%; height: 100%;">
+                        <iframe src="https://frvr.com/play/solitaire/" width="100%" height="100%" style="border: none;"></iframe>
                     </div>
                 `;
             default:
