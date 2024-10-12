@@ -7,6 +7,8 @@ class Window {
         this.taskbarItem = this.createTaskbarItem();
         this.position = { x: 0, y: 0 };
         this.centerWindow();
+        this.mapInstance = null;
+        this.panorama = null;
         if (this.program === 'maps') {
             this.initMap();
         } else if (this.program === 'internet-explorer') {
@@ -41,6 +43,7 @@ class Window {
                 return `
                     <div id="map-container" style="width: 100%; height: 100%;">
                         <div id="map" style="width: 100%; height: 100%;"></div>
+                        <button class="toggle-street-view">Toggle Street View</button>
                     </div>
                 `;
             case 'internet-explorer':
@@ -141,7 +144,7 @@ class Window {
         document.head.appendChild(style);
     }
 
-    initMap() {
+    /*initMap() {
         // Asegúrate de que el script de la API de Google Maps esté cargado
         if (typeof google === 'undefined') {
             const script = document.createElement('script');
@@ -150,38 +153,86 @@ class Window {
             script.defer = true;
             document.head.appendChild(script);
             
-            window.initMap = () => this.setupMap();
+            if (!window.initMap) {
+                window.initMap = () => {
+                    document.querySelectorAll('.window').forEach(windowElement => {
+                        const windowInstance = windowElement.windowInstance;
+                        if (windowInstance && windowInstance.program === 'maps' && !windowInstance.mapInstance) {
+                            windowInstance.setupMap();
+                        }
+                    });
+                };
+            }
         } else {
             this.setupMap();
         }
-    }
-
-    setupMap() {
-        const mapDiv = this.element.querySelector('#map');
-        this.map = new google.maps.Map(mapDiv, {
-            center: { lat: 37.3943436, lng: -5.9304048 },
-            zoom: 14
-        });
-
-        this.panorama = this.map.getStreetView();
-
-        const toggleButton = this.element.querySelector('#toggle-street-view');
-        toggleButton.addEventListener('click', () => this.toggleStreetView());
-    }
-
-    toggleStreetView() {
-        const toggle = this.panorama.getVisible();
-        if (toggle == false) {
-            this.panorama.setPosition(this.map.getCenter());
-            this.panorama.setPov({
-                heading: 34,
-                pitch: 10
-            });
-            this.panorama.setVisible(true);
-        } else {
-            this.panorama.setVisible(false);
+    }*/
+        initMap() {
+            if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
+                if (!window.mapsCallbacks) {
+                    window.mapsCallbacks = [];
+                }
+    
+                window.mapsCallbacks.push(() => this.setupMap());
+    
+                if (!document.querySelector('script[src*="maps.googleapis.com/maps/api/js"]')) {
+                    const script = document.createElement('script');
+                    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAPLgcdubhw7rDS9u-BeHPuoI8mg6ri5S8&callback=initMap`;
+                    script.async = true;
+                    script.defer = true;
+                    document.head.appendChild(script);
+    
+                    window.initMap = () => this.setupMap();
+                }
+            } else {
+                this.setupMap();
+            }
         }
-    }
+
+        setupMap() {
+            const mapDiv = this.element.querySelector('#map');
+            if (!mapDiv) {
+                console.error('Map container not found');
+                return;
+            }
+    
+            try {
+                this.mapInstance = new google.maps.Map(mapDiv, {
+                    center: { lat: 37.3943436, lng: -5.9304048 },
+                    zoom: 14
+                });
+    
+                google.maps.event.addListenerOnce(this.mapInstance, 'idle', () => {
+                    this.panorama = this.mapInstance.getStreetView();
+                    const toggleButton = this.element.querySelector('.toggle-street-view');
+                    if (toggleButton) {
+                        toggleButton.addEventListener('click', () => this.toggleStreetView());
+                    }
+                });
+            } catch (error) {
+                console.error('Error setting up map:', error);
+            }
+        }
+    
+        toggleStreetView() {
+            if (!this.panorama) {
+                console.error('Street View not initialized');
+                return;
+            }
+            
+            const toggle = this.panorama.getVisible();
+            if (toggle == false) {
+                this.panorama.setPosition(this.mapInstance.getCenter());
+                this.panorama.setPov({
+                    heading: 34,
+                    pitch: 10
+                });
+                this.panorama.setVisible(true);
+            } else {
+                this.panorama.setVisible(false);
+            }
+        }
+    
 
     createTaskbarItem() {
         const item = document.createElement('div');
@@ -299,6 +350,11 @@ class Window {
     }
 
     close() {
+        if (this.mapInstance) {
+            // Clean up the map instance
+            google.maps.event.clearInstanceListeners(this.mapInstance);
+            this.mapInstance = null;
+        }
         this.element.remove();
         this.taskbarItem.remove();
     }
@@ -306,7 +362,9 @@ class Window {
 
 function openWindow(program) {
     const window = new Window(program);
-    document.getElementById('windows-container').appendChild(window.element);
+    const container = document.getElementById('windows-container');
+    container.appendChild(window.element);
+    window.element.windowInstance = window;  // Store a reference to the Window instance
     document.getElementById('taskbar-programs').appendChild(window.taskbarItem);
 }
 
