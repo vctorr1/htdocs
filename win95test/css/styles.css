@@ -1,0 +1,250 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'MS Sans Serif', Arial, sans-serif;
+}
+
+#desktop {
+    height: calc(100% - 30px);
+    background-image: url('../images/desktop_bg.png');
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+}
+
+.desktop-icon {
+    width: 64px;
+    text-align: center;
+    color: white;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.desktop-icon img {
+    width: 32px;
+    height: 32px;
+}
+
+.window {
+    position: absolute;
+    width: 600px;
+    height: 450px;
+    background-color: #c0c0c0;
+    border: 2px outset #ffffff;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.window-header {
+    background-color: #000080;
+    color: white;
+    padding: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+}
+
+.window-controls button {
+    width: 16px;
+    height: 16px;
+    margin-left: 2px;
+    font-size: 10px;
+}
+
+.window-content {
+    height: calc(100% - 22px); /* 22px es la altura del header */
+    overflow: hidden;
+}
+
+.window.maximized {
+    width: 100% !important;
+    height: calc(100% - 30px) !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+.window.maximized .window-content {
+    height: calc(100% - 22px);
+}
+
+#taskbar {
+    height: 30px;
+    background-color: #c0c0c0;
+    border-top: 2px solid #ffffff;
+    display: flex;
+    align-items: center;
+}
+
+#start-button {
+    display: flex;
+    align-items: center;
+    padding: 2px 5px;
+    margin-left: 2px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#start-button img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+#taskbar-programs {
+    display: flex;
+    margin-left: 10px;
+}
+/* Estilos para el menú contextual */
+.context-menu {
+    position: absolute;
+    background-color: #c0c0c0;
+    border: 2px outset #ffffff;
+    padding: 2px;
+    display: none;
+    z-index: 1000;
+}
+
+.context-menu .menu-item {
+    padding: 2px 20px;
+    cursor: pointer;
+}
+
+.context-menu .menu-item:hover {
+    background-color: #000080;
+    color: white;
+}
+
+.context-menu hr {
+    margin: 2px 0;
+    border: none;
+    border-top: 1px solid #808080;
+}
+
+/* Estilos para el menú de inicio */
+.start-menu {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    background-color: #c0c0c0;
+    border: 2px outset #ffffff;
+    width: 200px;
+    display: none;
+    z-index: 1000;
+}
+
+.start-menu-header {
+    background: linear-gradient(to right, #000080, #1084d0);
+    color: white;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.start-menu-header img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.start-menu-item {
+    padding: 5px 20px;
+    cursor: pointer;
+}
+
+.start-menu-item:hover {
+    background-color: #000080;
+    color: white;
+}
+
+.start-menu hr {
+    margin: 2px 0;
+    border: none;
+    border-top: 1px solid #808080;
+}
+
+.taskbar-item {
+    padding: 2px 5px;
+    margin-right: 5px;
+    background-color: #c0c0c0;
+    border: 1px outset #ffffff;
+    cursor: pointer;
+}
+
+.taskbar-item.minimized {
+    background-color: #a0a0a0;
+}
+
+/* Estilos para el menú contextual y el menú de inicio (mantenidos del código anterior) */
+
+/* Estilos específicos para el iframe de Mapas */
+.window-content iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Estilos para el Bloc de notas */
+.notepad-content {
+    font-family: 'Courier New', monospace;
+    padding: 5px;
+}
+
+/* Estilos para Mi PC */
+.file-explorer {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.file-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    width: 80px;
+    text-align: center;
+}
+
+.file-item img {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 5px;
+}
+
+/* Estilos para la Papelera de reciclaje */
+.recycle-bin {
+    padding: 10px;
+    text-align: center;
+}
+
+.empty-bin {
+    margin-top: 10px;
+    padding: 5px 10px;
+}
+
+/* Estilos para el Buscaminas */
+.minesweeper-board {
+    display: grid;
+    grid-template-columns: repeat(9, 30px);
+    grid-gap: 1px;
+    background-color: #bdbdbd;
+    border: 3px solid #7b7b7b;
+    padding: 5px;
+}
+
+.minesweeper-cell {
+    width: 30px;
+    height: 30px;
+    background-color: #c0c0c0;
+    border: 2px outset #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.minesweeper-cell:active {
+    border-style: inset;
+}

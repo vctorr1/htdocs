@@ -7,11 +7,6 @@ class Window {
         this.taskbarItem = this.createTaskbarItem();
         this.position = { x: 0, y: 0 };
         this.centerWindow();
-        if (this.program === 'maps') {
-            this.initMap();
-        } else if (this.program === 'internet-explorer') {
-            this.initInternetExplorer();
-        }
     }
 
     createWindowElement() {
@@ -43,19 +38,6 @@ class Window {
                         <div id="map" style="width: 100%; height: 100%;"></div>
                     </div>
                 `;
-            case 'internet-explorer':
-                return `
-                    <div class="browser-container">
-                        <div class="browser-controls">
-                            <button id="browser-back">←</button>
-                            <button id="browser-forward">→</button>
-                            <button id="browser-reload">↻</button>
-                            <input type="text" id="browser-url" placeholder="Ingrese una URL">
-                            <button id="browser-go">Ir</button>
-                        </div>
-                        <iframe id="browser-frame" src="https://es.wikipedia.org/wiki/Wikipedia:Portada" width="100%" height="calc(100% - 40px)" style="border: none;"></iframe>
-                    </div>
-                `;
             case 'notepad':
                 return `<textarea class="notepad-content" style="width: 100%; height: 100%; resize: none;"></textarea>`;
             case 'my-computer':
@@ -75,6 +57,19 @@ class Window {
                         </div>
                     </div>
                 `;
+                case 'internet-explorer':
+                    return `
+                        <div class="browser-container">
+                            <div class="browser-controls">
+                                <button id="browser-back">←</button>
+                                <button id="browser-forward">→</button>
+                                <button id="browser-reload">↻</button>
+                                <input type="text" id="browser-url" placeholder="Ingrese una URL">
+                                <button id="browser-go">Ir</button>
+                            </div>
+                            <iframe id="browser-frame" src="https://es.wikipedia.org/wiki/Wikipedia:Portada" width="100%" height="calc(100% - 40px)" style="border: none;"></iframe>
+                        </div>
+                    `;
             case 'recycle-bin':
                 return `
                     <div class="recycle-bin">
@@ -84,12 +79,6 @@ class Window {
                 `;
             case 'minesweeper':
                 return `<div id="minesweeper-game"></div>`;
-            case 'solitaire':
-                return `
-                    <div class="solitaire-container">
-                        <iframe src="http://frvr.com/play/solitaire/" width="100%" height="100%" style="border: none;"></iframe>
-                    </div>
-                `;
             default:
                 return `<p>Contenido de ${this.program}</p>`;
         }
@@ -182,6 +171,17 @@ class Window {
             this.panorama.setVisible(false);
         }
     }
+    initSolitaire() {
+        const container = this.element.querySelector('.solitaire-container');
+        const iframe = container.querySelector('iframe');
+
+        // Ajustar el tamaño del iframe cuando la ventana cambie de tamaño
+        const resizeObserver = new ResizeObserver(() => {
+            this.adjustIframeSize(iframe);
+        });
+        resizeObserver.observe(container);
+    }
+
 
     createTaskbarItem() {
         const item = document.createElement('div');
@@ -209,16 +209,6 @@ class Window {
             // Inicializar el juego del buscaminas
             initMinesweeper(window.querySelector('#minesweeper-game'));
         }
-    }
-    initSolitaire() {
-        const container = this.element.querySelector('.solitaire-container');
-        const iframe = container.querySelector('iframe');
-
-        // Ajustar el tamaño del iframe cuando la ventana cambie de tamaño
-        const resizeObserver = new ResizeObserver(() => {
-            this.adjustIframeSize(iframe);
-        });
-        resizeObserver.observe(container);
     }
 
 
@@ -310,7 +300,7 @@ function openWindow(program) {
     document.getElementById('taskbar-programs').appendChild(window.taskbarItem);
 }
 
-// Event listener for desktop icons
+// Event listener para los iconos del escritorio
 document.querySelectorAll('.desktop-icon').forEach(icon => {
     icon.addEventListener('click', () => {
         const program = icon.getAttribute('data-program');

@@ -43,15 +43,15 @@ function createStartMenu() {
     menu.className = 'start-menu';
     menu.innerHTML = `
         <div class="start-menu-header">
-            <img src="images/LOGOETOPIA.png" alt="Personas">
-            <span>E-TOPÍA</span>
+            <img src="images/start_button.png" alt="Windows 95">
+            <span>Windows 95</span>
         </div>
-        <div class="start-menu-item">Javier Álvarez</div>
-        <div class="start-menu-item">Julia Baeza</div>
-        <div class="start-menu-item">Beatriz Carmona</div>
-        <div class="start-menu-item">Mario Oliva</div>
-        <div class="start-menu-item">Maria Luiza Silva</div>
-        <div class="start-menu-item">HTCA4</div>
+        <div class="start-menu-item">Programas</div>
+        <div class="start-menu-item">Documentos</div>
+        <div class="start-menu-item">Configuración</div>
+        <div class="start-menu-item">Buscar</div>
+        <div class="start-menu-item">Ayuda</div>
+        <div class="start-menu-item">Ejecutar</div>
         <hr>
         <div class="start-menu-item">Apagar el sistema...</div>
     `;
