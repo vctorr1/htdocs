@@ -22,9 +22,10 @@ body, html {
 }
 
 .desktop-icon img {
-    width: 32px;
-    height: 32px;
+    width: 80px;
+    height: 80px;
 }
+
 
 .window {
     position: absolute;

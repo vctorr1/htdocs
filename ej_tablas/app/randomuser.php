@@ -3,11 +3,11 @@
 include_once('functions.php');
 
 //función para cargar un registro aleatorio
-function getRandomUser($usersData){
+/*function getRandomUser($usersData){
     //Usamos la función array_rand para obtener un elemento aleatorio del array de datos del csv
     $randomUser = array_rand($usersData);
     return $randomUser;
-}
+}*/
 
 //Obtenemos los datos de los archivos CSV
 $usersData = getDataFromCSV("../model/users-table.csv");
