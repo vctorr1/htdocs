@@ -13,6 +13,8 @@ class Window {
             this.initMap();
         } else if (this.program === 'internet-explorer') {
             this.initInternetExplorer();
+        }else if (this.program === 'emoji-keyboard') {
+            this.initEmojiKeyboard();
         }
     }
 
@@ -44,6 +46,18 @@ class Window {
                     <div id="map-container" style="width: 100%; height: 100%;">
                         <div id="map" style="width: 100%; height: 100%;"></div>
                         <button class="toggle-street-view">Toggle Street View</button>
+                    </div>
+                `;
+            case 'emoji-keyboard':
+                return `
+                    <div class="emoji-keyboard">
+                        <div class="emoji-categories"></div>
+                        <div class="emoji-grid"></div>
+                        <div class="emoji-pagination">
+                            <button class="prev-page">Anterior</button>
+                            <span class="page-info"></span>
+                            <button class="next-page">Siguiente</button>
+                        </div>
                     </div>
                 `;
             case 'internet-explorer':
@@ -95,6 +109,94 @@ class Window {
                 `;
             default:
                 return `<p>Contenido de ${this.program}</p>`;
+        }
+    }
+
+    initEmojiKeyboard() {
+        this.emojiCategories = {
+            'Cara y expresiones': ['😀', '😃', '😄', '😁', '😆', '😅', '🤣', '😂', '🙂', '🙃', '😉', '😊', '😇', '🥰', '😍', '🤩', '😘', '😗', '☺️', '😚', '😙', '🥲', '😋', '😛', '😜', '🤪', '😝', '🤑', '🤗', '🤭', '🤫', '🤔', '🤐', '🤨', '😐', '😑', '😶', '😶‍🌫️', '😏', '😒', '🙄', '😬', '😮‍💨', '🤥', '😌', '😔', '😪', '🤤', '😴', '😷', '🤒', '🤕', '🤢', '🤮', '🤧', '🥵', '🥶', '🥴', '😵', '😵‍💫', '🤯', '🤠', '🥳', '🥸', '😎', '🤓', '🧐', '😕', '😟', '🙁', '☹️', '😮', '😯', '😲', '😳', '🥺', '😦', '😧', '😨', '😰', '😥', '😢', '😭', '😱', '😖', '😣', '😞', '😓', '😩', '😫', '🥱', '😤', '😡', '😠', '🤬', '😈', '👿', '💀', '☠️', '💩', '🤡', '👹', '👺', '👻', '👽', '👾', '🤖', '😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾', '🙈', '🙉', '🙊'],
+            'Gestos': ['👋', '🤚', '🖐️', '✋', '🖖', '👌', '🤌', '🤏', '✌️', '🤞', '🤟', '🤘', '🤙', '👈', '👉', '👆', '🖕', '👇', '☝️', '👍', '👎', '✊', '👊', '🤛', '🤜', '👏', '🙌', '👐', '🤲', '🤝', '🙏', '✍️', '💅', '🤳', '💪', '🦾', '🦿', '🦵', '🦶', '👂', '🦻', '👃', '🧠', '🫀', '🫁', '🦷', '🦴', '👀', '👁️', '👅', '👄', '💋', '🩸'],
+            'Animales y Naturaleza': ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐽', '🐸', '🐵', '🙈', '🙉', '🙊', '🐒', '🐔', '🐧', '🐦', '🐤', '🐣', '🐥', '🦆', '🦅', '🦉', '🦇', '🐺', '🐗', '🐴', '🦄', '🐝', '🪱', '🐛', '🦋', '🐌', '🐞', '🐜', '🪰', '🪲', '🪳', '🦟', '🦗', '🕷️', '🕸️', '🦂', '🐢', '🐍', '🦎', '🦖', '🦕', '🐙', '🦑', '🦐', '🦞', '🦀', '🐡', '🐠', '🐟', '🐬', '🐳', '🐋', '🦈', '🐊', '🐅', '🐆', '🦓', '🦍', '🦧', '🦣', '🐘', '🦛', '🦏', '🐪', '🐫', '🦒', '🦘', '🦬', '🐃', '🐂', '🐄', '🐎', '🐖', '🐏', '🐑', '🦙', '🐐', '🦌', '🐕', '🐩', '🦮', '🐕‍🦺', '🐈', '🐈‍⬛', '🪶', '🐓', '🦃', '🦤', '🦚', '🦜', '🦢', '🦩', '🕊️', '🐇', '🦝', '🦨', '🦡', '🦫', '🦦', '🦥', '🐁', '🐀', '🐿️', '🦔', '🐾', '🐉', '🐲', '🌵', '🎄', '🌲', '🌳', '🌴', '🪵', '🌱', '🌿', '☘️', '🍀', '🎍', '🪴', '🎋', '🍃', '🍂', '🍁', '🍄', '🐚', '🪨', '🌾', '💐', '🌷', '🌹', '🥀', '🌺', '🌸', '🌼', '🌻', '🌞', '🌝', '🌛', '🌜', '🌚', '🌕', '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔', '🌙', '🌎', '🌍', '🌏', '🪐', '💫', '⭐', '🌟', '✨', '⚡', '☄️', '💥', '🔥', '🌪️', '🌈', '☀️', '🌤️', '⛅', '🌥️', '☁️', '🌦️', '🌧️', '⛈️', '🌩️', '🌨️', '❄️', '☃️', '⛄', '🌬️', '💨', '💧', '💦', '☔', '☂️', '🌊', '🌫️'],
+            // ... Puedes añadir más categorías aquí
+        };
+        this.currentCategory = Object.keys(this.emojiCategories)[0];
+        this.currentPage = 1;
+        this.emojisPerPage = 48;
+
+        const categoryContainer = this.element.querySelector('.emoji-categories');
+        Object.keys(this.emojiCategories).forEach(category => {
+            const button = document.createElement('button');
+            button.textContent = category;
+            button.addEventListener('click', () => this.changeCategory(category));
+            categoryContainer.appendChild(button);
+        });
+
+        const prevButton = this.element.querySelector('.prev-page');
+        const nextButton = this.element.querySelector('.next-page');
+        prevButton.addEventListener('click', () => this.changePage(-1));
+        nextButton.addEventListener('click', () => this.changePage(1));
+
+        this.updateEmojiGrid();
+        // Agregar evento de redimensionamiento
+        window.addEventListener('resize', () => {
+            this.updateEmojiGrid();
+        });
+    }
+
+    changeCategory(category) {
+        this.currentCategory = category;
+        this.currentPage = 1;
+        this.updateEmojiGrid();
+    }
+
+    changePage(delta) {
+        const totalPages = Math.ceil(this.emojiCategories[this.currentCategory].length / this.emojisPerPage);
+        this.currentPage = Math.max(1, Math.min(this.currentPage + delta, totalPages));
+        this.updateEmojiGrid();
+    }
+
+    updateEmojiGrid() {
+        const emojiGrid = this.element.querySelector('.emoji-grid');
+        emojiGrid.innerHTML = '';
+        // Calcular el número de emojis que caben en la pantalla
+        const gridRect = emojiGrid.getBoundingClientRect();
+        const buttonSize = 40; // Tamaño aproximado de cada botón de emoji
+        const columns = Math.floor(gridRect.width / buttonSize);
+        const rows = Math.floor(gridRect.height / buttonSize);
+        this.emojisPerPage = columns * rows;
+
+        const startIndex = (this.currentPage - 1) * this.emojisPerPage;
+        const endIndex = startIndex + this.emojisPerPage;
+        const emojisToShow = this.emojiCategories[this.currentCategory].slice(startIndex, endIndex);
+
+        emojisToShow.forEach(emoji => {
+            const button = document.createElement('button');
+            button.textContent = emoji;
+            button.addEventListener('click', () => this.insertEmoji(emoji));
+            emojiGrid.appendChild(button);
+        });
+
+        const pageInfo = this.element.querySelector('.page-info');
+        const totalPages = Math.ceil(this.emojiCategories[this.currentCategory].length / this.emojisPerPage);
+        pageInfo.textContent = `Página ${this.currentPage} de ${totalPages}`;
+    }
+
+    insertEmoji(emoji) {
+        const notepadWindow = Array.from(document.querySelectorAll('.window'))
+            .find(w => w.querySelector('.window-header span').textContent === 'notepad');
+        
+        if (notepadWindow) {
+            const textarea = notepadWindow.querySelector('.notepad-content');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const text = textarea.value;
+            const before = text.substring(0, start);
+            const after = text.substring(end);
+            textarea.value = before + emoji + after;
+            textarea.selectionStart = textarea.selectionEnd = start + emoji.length;
+            textarea.focus();
+        } else {
+            alert('Por favor, abre el Notepad primero para usar el teclado de emojis.');
         }
     }
 
