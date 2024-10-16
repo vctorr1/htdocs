@@ -1,6 +1,7 @@
 <?php
 include '../app/functions.php';
 
+//métodos get para retornar scripts
 $accion = $_GET['accion'] ?? '';
 $id = $_GET['id'] ?? '';
 
@@ -23,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     if ($accion == 'crear') {
         crearRegistro($nuevoRegistro);
-    } elseif ($accion == 'editar') {
+    } else if ($accion == 'editar') {
         $nuevoRegistro['id'] = $id;
         $nuevoRegistro['fecha_registro'] = $registro['fecha_registro'];
         actualizarRegistro($id, $nuevoRegistro);

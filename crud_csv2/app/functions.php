@@ -1,10 +1,11 @@
 <?php
 define('CSV_FILE', __DIR__ . '/../model/users-table1.csv');
 
+//función para leer los registros del csv usando fgetcvs
 function leerRegistros() {
     $registros = [];
     if (($handle = fopen(CSV_FILE, "r")) !== FALSE) {
-        // Saltar la primera línea (encabezados)
+        //saltamos los encabezdos
         fgetcsv($handle, 1000, ",");
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
             $registros[] = [
@@ -17,11 +18,12 @@ function leerRegistros() {
                 'bio' => $data[6]
             ];
         }
+        //cerramsoe l flujo
         fclose($handle);
-    }
+    }//devolvemos los registros
     return $registros;
 }
-
+//funcion para leer registros
 function leerRegistro($id) {
     $registros = leerRegistros();
     foreach ($registros as $registro) {
@@ -31,7 +33,7 @@ function leerRegistro($id) {
     }
     return null;
 }
-
+//método para crear nuevos registros
 function crearRegistro($registro) {
     $handle = fopen(CSV_FILE, "a");
     $nuevoId = obtenerNuevoId();
@@ -39,7 +41,7 @@ function crearRegistro($registro) {
         $nuevoId,
         $registro['username'],
         $registro['email'],
-        date('Y-m-d'), // fecha actual para fecha_registro
+        date('Y-m-d'), //fecha actual para la fecha de registro usando la calse Date
         $registro['seguidores'],
         $registro['siguiendo'],
         $registro['bio']
@@ -47,7 +49,7 @@ function crearRegistro($registro) {
     fclose($handle);
     return $nuevoId;
 }
-
+//funcion para editar los registros
 function actualizarRegistro($id, $registroActualizado) {
     $registros = leerRegistros();
     $registrosActualizados = [];
@@ -58,9 +60,11 @@ function actualizarRegistro($id, $registroActualizado) {
             $registrosActualizados[] = $registro;
         }
     }
+    //en lugar de devolver registros llamamos al metodo escribirRegistros e insertamos el nuevo array
     escribirRegistros($registrosActualizados);
 }
 
+//eliminamos los registros en funcion al id proporcionado
 function eliminarRegistro($id) {
     $registros = leerRegistros();
     $registrosActualizados = array_filter($registros, function($registro) use ($id) {
@@ -69,6 +73,7 @@ function eliminarRegistro($id) {
     escribirRegistros($registrosActualizados);
 }
 
+//función para escribir los registros
 function escribirRegistros($registros) {
     $handle = fopen(CSV_FILE, "w");
     // Escribir encabezados
@@ -86,7 +91,7 @@ function escribirRegistros($registros) {
     }
     fclose($handle);
 }
-
+//funcion para obtener los nuevos ids
 function obtenerNuevoId() {
     $registros = leerRegistros();
     $maxId = 0;

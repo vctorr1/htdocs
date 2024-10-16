@@ -1,18 +1,22 @@
 <?php
 include 'functions.php';
 
+//usamos el método post para obtener el contenido de los campos del formulario dentro de la tabla y enviar los nuevos valores
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nuevoRegistro = [
+        //$_POST  es an associative array of variables passed to the current script via the HTTP POST method.
         'username' => $_POST['username'],
         'email' => $_POST['email'],
         'seguidores' => $_POST['seguidores'],
         'siguiendo' => $_POST['siguiendo'],
         'bio' => $_POST['bio']
     ];
+    //llamamos al metodo de funciones para crear los registros
     crearRegistro($nuevoRegistro);
     header('Location: index.php');
     exit;
 }
+//html que compone al página de creación de usuario y enviamos a template 2
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -22,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <h1>Crear Nuevo Usuario</h1>
+    <!--fromulario de método post-->
     <form method="post">
         <label>Username: <input type="text" name="username" required></label><br>
         <label>Email: <input type="email" name="email" required></label><br>

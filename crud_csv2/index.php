@@ -2,7 +2,7 @@
 include 'app/functions.php';
 
 $mensaje = '';
-
+//eliminar registros usando post
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion']) && $_POST['accion'] == 'eliminar') {
     eliminarRegistro($_POST['id']);
     $mensaje = "Usuario eliminado exitosamente.";
