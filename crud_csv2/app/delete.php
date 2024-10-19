@@ -1,6 +1,6 @@
 <?php
 include 'functions.php';
-
+//script de borrado de registros
 $id = $_GET['id'] ?? '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

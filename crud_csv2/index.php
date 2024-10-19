@@ -25,7 +25,7 @@ $registros = leerRegistros();
     <?php if ($mensaje): ?>
         <p><strong><?php echo $mensaje; ?></strong></p>
     <?php endif; ?>
-
+    <!--em-->
     <a href="templates/template2.php?accion=crear">Crear Nuevo Usuario</a>
 
     <h2>Lista de Usuarios</h2>

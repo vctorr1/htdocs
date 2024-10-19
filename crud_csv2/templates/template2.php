@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <!-- Minified version -->
         <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 </head>
-<body>
+<body> <!--cuerpo de la tabla html-->
     <h1><?php echo $accion == 'editar' ? 'Editar Usuario' : 'Crear Nuevo Usuario'; ?></h1>
     <form method="post">
         <label for="username">Username:</label>
