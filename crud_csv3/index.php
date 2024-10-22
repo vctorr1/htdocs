@@ -1,90 +1,99 @@
 <?php
-//incluimos las funciones a usar
+//Incluimos el archivo de funciones
 require_once 'functions.php';
 
-//se obtiene la acción del metodo get, por defecto list, y se craga el csv en un array con fgetcsv
+//usamos el get para determinar la accion a realizar (obteniendo el valor dep parametro action de la url)
 $action = $_GET['action'] ?? 'list';
-$filename = './csv//users-table1.csv';
-$data = readCSV($filename);
+$file = './csv//users-table1.csv';
+$data = readCSV($file);
 
-//switch para escoger qué hacer dependiendo de la accion recibida por get
+//switch principal para manejar diferentes acciones que recibimos por post
 switch ($action) {
     case 'add':
-        //si la petición es post se escriben los datos en el csv
+        //adición de nuevos registros (usamos post para procesar todos los formularios)
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $newRecord = [
-                validateInput($_POST['username']),
-                validateInput($_POST['email']),
-                validateInput($_POST['fecha_registro']),
-                validateInput($_POST['seguidores']),
-                validateInput($_POST['siguiendo']),
-                validateInput($_POST['bio'])
+                'username' => validateInput($_POST['username']),
+                'email' => validateInput($_POST['email']),
+                'fecha_registro' => validateInput($_POST['fecha_registro']),
+                'seguidores' => validateInput($_POST['seguidores']),
+                'siguiendo' => validateInput($_POST['siguiendo']),
+                'bio' => validateInput($_POST['bio'])
             ];
             $data[] = $newRecord;
-            writeCSV($filename, $data);
+            writeCSV($file, $data);
             header('Location: index.php');
             exit;
         }
-        //se incluye el template correspondiente
-        include 'templates/add_form.tlp.php';   
+        include 'templates/create.tlp.php';   
         break;
 
     case 'edit':
+        //edición de registros individuales
         $id = $_GET['id'] ?? null;
         if ($id !== null) {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $updatedRecord = [
-                    validateInput($_POST['nombre']),
-                    validateInput($_POST['edad']),
-                    validateInput($_POST['curso'])
+                    'username' => validateInput($_POST['username']),
+                    'email' => validateInput($_POST['email']),
+                    'fecha_registro' => validateInput($_POST['fecha_registro']),
+                    'seguidores' => validateInput($_POST['seguidores']),
+                    'siguiendo' => validateInput($_POST['siguiendo']),
+                    'bio' => validateInput($_POST['bio'])
                 ];
                 if (updateRecord($data, $id, $updatedRecord)) {
-                    writeCSV($filename, $data);
+                    writeCSV($file, $data);
                     header('Location: index.php');
                     exit;
                 }
             }
             $record = findRecord($data, $id);
-            include 'templates/edit_form.tlp.php';
+            include 'templates/edit.tlp.php';
         }
         break;
 
-        case 'bulk_edit':
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                if (isset($_POST['records'])) {
-                    foreach ($_POST['records'] as $id => $record) {
-                        $updatedRecord = [
-                            validateInput($record['nombre']),
-                            validateInput($record['edad']),
-                            validateInput($record['curso'])
-                        ];
-                        updateRecord($data, $id, $updatedRecord);
-                    }
-                    writeCSV($filename, $data);
-                    header('Location: index.php');
-                    exit;
+    case 'multi_edit':
+        //edición de varios registros
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['records'])) {
+                foreach ($_POST['records'] as $id => $record) {
+                    $updatedRecord = [
+                        'username' => validateInput($record['username']),
+                        'email' => validateInput($record['email']),
+                        'fecha_registro' => validateInput($record['fecha_registro']),
+                        'seguidores' => validateInput($record['seguidores']),
+                        'siguiendo' => validateInput($record['siguiendo']),
+                        'bio' => validateInput($record['bio'])
+                    ];
+                    updateRecord($data, $id, $updatedRecord);
                 }
-            } else {
-                $ids = explode(',', $_GET['ids'] ?? '');
-                $selectedRecords = [];
-                foreach ($ids as $id) {
-                    if (isset($data[$id])) {
-                        $selectedRecords[$id] = $data[$id];
-                    }
-                }
-                include 'templates/bulk_edit_form.tlp.php';
+                writeCSV($file, $data);
+                header('Location: index.php');
+                exit;
             }
-            break;
+        } else {
+            $ids = explode(',', $_GET['ids'] ?? '');
+            $selectedRecords = [];
+            foreach ($ids as $id) {
+                if (isset($data[$id])) {
+                    $selectedRecords[$id] = $data[$id];
+                }
+            }
+            include 'templates/multiple_edit.tlp.php';
+        }
+        break;
 
     case 'delete':
+        //eliminación de registros
         $id = $_GET['id'] ?? null;
         if ($id !== null && deleteRecord($data, $id)) {
-            writeCSV($filename, $data);
+            writeCSV($file, $data);
         }
         header('Location: index.php');
         exit;
 
     case 'view':
+        //vista detallada de un registro
         $id = $_GET['id'] ?? null;
         if ($id !== null) {
             $record = findRecord($data, $id);
@@ -93,25 +102,26 @@ switch ($action) {
         break;
 
     default:
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bulk_action'])) {
+        //edición múltiple y vista por defecto
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['multi_action'])) {
             $selectedIds = $_POST['selected'] ?? [];
-            $bulkAction = $_POST['bulk_action'];
-
+            $multiAction = $_POST['multi_action'];
+    
             if (!empty($selectedIds)) {
-                switch ($bulkAction) {
+                switch ($multiAction) {
                     case 'delete':
                         foreach ($selectedIds as $id) {
                             deleteRecord($data, $id);
                         }
-                        writeCSV($filename, $data);
+                        writeCSV($file, $data);
                         break;
                     case 'edit':
-                        header('Location: index.php?action=bulk_edit&ids=' . implode(',', $selectedIds));
+                        header('Location: index.php?action=multi_edit&ids=' . implode(',', $selectedIds));
                         exit;
                 }
             }
         }
-        include 'templates/list_records.tlp.php';
+        include 'templates/list.tlp.php';
         break;
 }
 ?>

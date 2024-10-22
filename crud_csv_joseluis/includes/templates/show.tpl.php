@@ -6,6 +6,7 @@
     <title>Detalles de registro</title>
 </head>
 <body>
-    <show $bodyOutput >
+    <?php echo $bodyOutput ?>
+    <a href="./index.php"></a>
 </body>
 </html>
