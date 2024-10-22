@@ -2,126 +2,167 @@
 //Incluimos el archivo de funciones
 require_once 'functions.php';
 
-//usamos el get para determinar la accion a realizar (obteniendo el valor dep parametro action de la url)
-$action = $_GET['action'] ?? 'list';
-$file = './csv//users-table1.csv';
-$data = readCSV($file);
+// Verificamos que el directorio csv existe
+$csvDir = './csv';
+if (!is_dir($csvDir)) {
+    mkdir($csvDir, 0777, true);
+}
 
-//switch principal para manejar diferentes acciones que recibimos por post
+//usamos el get para determinar la accion a realizar
+$action = $_GET['action'] ?? 'list';
+$file = './csv/users-table1.csv';
+
+// Si el archivo no existe, lo creamos con los encabezados
+if (!file_exists($file)) {
+    $headers = ['username', 'email', 'fecha_registro', 'seguidores', 'siguiendo', 'bio'];
+    $initialData = [
+        'headers' => $headers,
+        'data' => []
+    ];
+    writeCSV($file, $initialData);
+}
+
+$csvData = readCSV($file);
+
+// Verificar que tenemos los encabezados necesarios
+if (empty($csvData['headers'])) {
+    $csvData['headers'] = ['username', 'email', 'fecha_registro', 'seguidores', 'siguiendo', 'bio'];
+    writeCSV($file, $csvData);
+}
+
+//switch principal para manejar diferentes acciones
 switch ($action) {
     case 'add':
-        //adición de nuevos registros (usamos post para procesar todos los formularios)
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $newRecord = [
-                'username' => validateInput($_POST['username']),
-                'email' => validateInput($_POST['email']),
-                'fecha_registro' => validateInput($_POST['fecha_registro']),
-                'seguidores' => validateInput($_POST['seguidores']),
-                'siguiendo' => validateInput($_POST['siguiendo']),
-                'bio' => validateInput($_POST['bio'])
-            ];
-            $data[] = $newRecord;
-            writeCSV($file, $data);
-            header('Location: index.php');
-            exit;
+            $newRecord = [];
+            foreach ($csvData['headers'] as $header) {
+                $newRecord[$header] = validateInput($_POST[$header] ?? '');
+            }
+            $csvData['data'][] = $newRecord;
+            if (writeCSV($file, $csvData)) {
+                header('Location: index.php');
+                exit;
+            }
         }
+        $bodyOutput = generateCreateHTML();
         include 'templates/create.tlp.php';   
         break;
 
-    case 'edit':
-        //edición de registros individuales
-        $id = $_GET['id'] ?? null;
-        if ($id !== null) {
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $updatedRecord = [
-                    'username' => validateInput($_POST['username']),
-                    'email' => validateInput($_POST['email']),
-                    'fecha_registro' => validateInput($_POST['fecha_registro']),
-                    'seguidores' => validateInput($_POST['seguidores']),
-                    'siguiendo' => validateInput($_POST['siguiendo']),
-                    'bio' => validateInput($_POST['bio'])
-                ];
-                if (updateRecord($data, $id, $updatedRecord)) {
-                    writeCSV($file, $data);
-                    header('Location: index.php');
-                    exit;
+    case 'multi_edit':
+        if (isset($_GET['ids'])) {
+            $ids = explode(',', $_GET['ids']);
+            $records = [];
+            foreach ($ids as $id) {
+                $id = (int)$id;
+                if (isset($csvData['data'][$id])) {
+                    $records[$id] = $csvData['data'][$id];
                 }
             }
-            $record = findRecord($data, $id);
+            $bodyOutput = generateMultiEditHTML($records, $ids);
             include 'templates/edit.tlp.php';
+        } else {
+            header('Location: index.php');
+            exit;
         }
         break;
 
-    case 'multi_edit':
-        //edición de varios registros
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['records'])) {
-                foreach ($_POST['records'] as $id => $record) {
-                    $updatedRecord = [
-                        'username' => validateInput($record['username']),
-                        'email' => validateInput($record['email']),
-                        'fecha_registro' => validateInput($record['fecha_registro']),
-                        'seguidores' => validateInput($record['seguidores']),
-                        'siguiendo' => validateInput($record['siguiendo']),
-                        'bio' => validateInput($record['bio'])
-                    ];
-                    updateRecord($data, $id, $updatedRecord);
+    case 'multi_edit_save':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['records']) && isset($_POST['ids'])) {
+            $records = $_POST['records'];
+            foreach ($records as $id => $record) {
+                $updatedRecord = [];
+                foreach ($csvData['headers'] as $header) {
+                    $updatedRecord[$header] = validateInput($record[$header] ?? '');
                 }
-                writeCSV($file, $data);
+                updateRecord($csvData, $id, $updatedRecord);
+            }
+            writeCSV($file, $csvData);
+            header('Location: index.php');
+            exit;
+        }
+        header('Location: index.php');
+        break;
+
+    case 'edit':
+        $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
+        if ($id !== null) {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $updatedRecord = [];
+                foreach ($csvData['headers'] as $header) {
+                    $updatedRecord[$header] = validateInput($_POST[$header] ?? '');
+                }
+                if (updateRecord($csvData, $id, $updatedRecord)) {
+                    if (writeCSV($file, $csvData)) {
+                        header('Location: index.php');
+                        exit;
+                    }
+                }
+            }
+            $record = findRecord($csvData, $id);
+            if ($record) {
+                $bodyOutput = generateEditHTML($record, $id);
+                include 'templates/edit.tlp.php';
+            } else {
                 header('Location: index.php');
                 exit;
             }
         } else {
-            $ids = explode(',', $_GET['ids'] ?? '');
-            $selectedRecords = [];
-            foreach ($ids as $id) {
-                if (isset($data[$id])) {
-                    $selectedRecords[$id] = $data[$id];
-                }
-            }
-            include 'templates/multiple_edit.tlp.php';
+            header('Location: index.php');
+            exit;
         }
         break;
 
     case 'delete':
-        //eliminación de registros
-        $id = $_GET['id'] ?? null;
-        if ($id !== null && deleteRecord($data, $id)) {
-            writeCSV($file, $data);
+        $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
+        if ($id !== null && deleteRecord($csvData, $id)) {
+            writeCSV($file, $csvData);
         }
         header('Location: index.php');
         exit;
 
     case 'view':
-        //vista detallada de un registro
-        $id = $_GET['id'] ?? null;
+        $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
         if ($id !== null) {
-            $record = findRecord($data, $id);
-            include 'templates/view_record.tlp.php';
-        }
-        break;
-
-    default:
-        //edición múltiple y vista por defecto
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['multi_action'])) {
-            $selectedIds = $_POST['selected'] ?? [];
-            $multiAction = $_POST['multi_action'];
-    
-            if (!empty($selectedIds)) {
-                switch ($multiAction) {
-                    case 'delete':
-                        foreach ($selectedIds as $id) {
-                            deleteRecord($data, $id);
-                        }
-                        writeCSV($file, $data);
-                        break;
-                    case 'edit':
-                        header('Location: index.php?action=multi_edit&ids=' . implode(',', $selectedIds));
-                        exit;
+            $record = findRecord($csvData, $id);
+            if ($record) {
+                $bodyOutput = '<h2>Detalles del registro</h2>';
+                $bodyOutput .= '<dl>';
+                foreach ($record as $key => $value) {
+                    $bodyOutput .= '<dt>' . htmlspecialchars($key) . '</dt>';
+                    $bodyOutput .= '<dd>' . htmlspecialchars($value) . '</dd>';
                 }
+                $bodyOutput .= '</dl>';
+                $bodyOutput .= '<a href="index.php" class="button">Volver</a>';
+                include 'templates/view.tlp.php';
+                break;
             }
         }
+        header('Location: index.php');
+        exit;
+
+    default:
+        // Procesar acciones en masa
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bulk_action']) && !empty($_POST['selected'])) {
+            $selectedIds = isset($_POST['select_all']) ? 
+                          array_keys($csvData['data']) : 
+                          array_map('intval', $_POST['selected']);
+            
+            switch ($_POST['bulk_action']) {
+                case 'delete':
+                    foreach ($selectedIds as $id) {
+                        deleteRecord($csvData, $id);
+                    }
+                    writeCSV($file, $csvData);
+                    header('Location: index.php');
+                    exit;
+                    
+                case 'edit':
+                    header('Location: index.php?action=multi_edit&ids=' . implode(',', $selectedIds));
+                    exit;
+            }
+        }
+
+        $bodyOutput = generateTableHTML($csvData);
         include 'templates/list.tlp.php';
         break;
 }
-?>
