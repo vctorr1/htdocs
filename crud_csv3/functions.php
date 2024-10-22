@@ -85,7 +85,7 @@ function generateTableHTML($csvData) {
     $html = '<form action="index.php" method="post">';
     $html .= '<table>';
     $html .= '<thead><tr>';
-    $html .= '<th><input type="checkbox" name="select_all" value="1"></th>';
+    $html .= '<th></th>';
     
     foreach ($csvData['headers'] as $header) {
         $html .= '<th>' . htmlspecialchars($header) . '</th>';
