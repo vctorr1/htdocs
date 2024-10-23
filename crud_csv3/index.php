@@ -89,22 +89,48 @@ switch ($action) {
             }
             break;
 
-    case 'multi_edit_save':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['records']) && isset($_POST['ids'])) {
-            $records = $_POST['records'];
-            foreach ($records as $id => $record) {
-                $updatedRecord = [];
-                foreach ($csvData['headers'] as $header) {
-                    $updatedRecord[$header] = validateInput($record[$header] ?? '');
+            case 'multi_edit_save':
+                // Verifica que:
+                // 1. La petición sea POST (envío de formulario)
+                // 2. Existan registros en el POST
+                // 3. Existan IDs en el POST
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && 
+                    isset($_POST['records']) && 
+                    isset($_POST['ids'])) {
+                    
+                    // Obtiene los registros enviados del formulario
+                    // La estructura es: records[id][campo] = valor
+                    // Ejemplo: records[0][username] = "nuevo_nombre"
+                    $records = $_POST['records'];
+                    
+                    // Itera sobre cada registro recibido
+                    foreach ($records as $id => $record) {
+                        // Prepara array para el registro actualizado
+                        $updatedRecord = [];
+                        
+                        // Procesa cada campo del registro según los encabezados definidos
+                        foreach ($csvData['headers'] as $header) {
+                            // Sanitiza y valida cada campo
+                            // Si el campo no existe, asigna string vacío
+                            $updatedRecord[$header] = validateInput($record[$header] ?? '');
+                        }
+                        
+                        // Actualiza el registro en el array de datos
+                        // La función updateRecord verifica si el ID existe
+                        updateRecord($csvData, $id, $updatedRecord);
+                    }
+                    
+                    // Guarda todos los cambios en el archivo CSV
+                    writeCSV($file, $csvData);
+                    
+                    // Redirecciona a la página principal tras guardar
+                    header('Location: index.php');
+                    exit;
                 }
-                updateRecord($csvData, $id, $updatedRecord);
-            }
-            writeCSV($file, $csvData);
-            header('Location: index.php');
-            exit;
-        }
-        header('Location: index.php');
-        break;
+                
+                // Si no se cumplen las condiciones, redirecciona
+                header('Location: index.php');
+                break;
 
     case 'edit':
         $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
