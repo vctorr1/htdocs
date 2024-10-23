@@ -33,7 +33,7 @@ if (empty($csvData['headers'])) {
 //switch principal para manejar diferentes acciones
 switch ($action) {
     case 'add':
-        // Maneja la creación de nuevos registros
+        //creamos los neuvos registros
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Procesa el formulario de creación
             $newRecord = [];
@@ -45,28 +45,49 @@ switch ($action) {
                 header('Location: index.php');
                 exit;
             }
-        } // Muestra el formulario de creación
+        } //mostramos el formulario de creación
         $bodyOutput = generateCreateHTML();
         include 'templates/create.tlp.php';   
         break;
 
-    case 'multi_edit':
-        if (isset($_GET['ids'])) {
-            $ids = explode(',', $_GET['ids']);
-            $records = [];
-            foreach ($ids as $id) {
-                $id = (int)$id;
-                if (isset($csvData['data'][$id])) {
-                    $records[$id] = $csvData['data'][$id];
+        case 'multi_edit':
+            // Verifica si se recibieron IDs en la URL
+            // Ejemplo URL: index.php?action=multi_edit&ids=1,2,3
+            if (isset($_GET['ids'])) {
+                // Convierte el string de IDs separados por comas en un array
+                // Ejemplo: "1,2,3" se convierte en ['1','2','3']
+                $ids = explode(',', $_GET['ids']);
+                
+                // Inicializa array para almacenar los registros a editar
+                $records = [];
+                
+                // Itera sobre cada ID recibido
+                foreach ($ids as $id) {
+                    // Convierte el ID a entero para seguridad
+                    // Previene inyección y asegura tipo de dato correcto
+                    $id = (int)$id;
+                    
+                    // Verifica si el registro existe en los datos del CSV
+                    if (isset($csvData['data'][$id])) {
+                        // Si existe, lo añade al array de registros a editar
+                        // Mantiene el ID como índice para posterior referencia
+                        $records[$id] = $csvData['data'][$id];
+                    }
+                    // Si el registro no existe, simplemente lo ignora
                 }
+                
+                // Genera el HTML del formulario de edición múltiple
+                // Pasa tanto los registros como los IDs originales
+                $bodyOutput = generateMultiEditHTML($records, $ids);
+                
+                // Incluye la plantilla de edición que mostrará el formulario
+                include 'templates/edit.tlp.php';
+            } else {
+                // Si no se recibieron IDs, redirecciona a la página principal
+                header('Location: index.php');
+                exit;
             }
-            $bodyOutput = generateMultiEditHTML($records, $ids);
-            include 'templates/edit.tlp.php';
-        } else {
-            header('Location: index.php');
-            exit;
-        }
-        break;
+            break;
 
     case 'multi_edit_save':
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['records']) && isset($_POST['ids'])) {
