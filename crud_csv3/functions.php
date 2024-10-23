@@ -66,6 +66,32 @@ function deleteRecord(&$csvData, $id) {
     }
     return false;
 }
+function createPostsCSV() {
+    $file = './csv/posts-table.csv';
+    if (!file_exists($file)) {
+        $headers = ['id','user_id', 'imagen_url', 'descripcion', 'fecha_publicacion', 'likes', 'comentarios', 'categorias'];
+        $initialData = [
+            'headers' => $headers,
+            'data' => []
+        ];
+        writeCSV($file, $initialData);
+    }
+}
+
+// Función para obtener posts de un usuario específico
+function getUserPosts($userId) {
+    $file = './csv/posts-table.csv';
+    $postsData = readCSV($file);
+    $userPosts = [];
+    
+    foreach ($postsData['data'] as $post) {
+        if ($post['user_id'] == $userId) {
+            $userPosts[] = $post;
+        }
+    }
+    
+    return $userPosts;
+}
 
 //función para actualizar una celda en el array
 function updateRecord(&$csvData, $id, $newRecord) {
@@ -83,13 +109,14 @@ function generateTableHTML($csvData) {
     }
 
     $html = '<form action="index.php" method="post">';
-    $html .= '<table>';
+    $html .= '<table class="main-table">';
     $html .= '<thead><tr>';
-    $html .= '<th></th>';
+    $html .= '<th></th>'; // Para checkboxes
     
     foreach ($csvData['headers'] as $header) {
         $html .= '<th>' . htmlspecialchars($header) . '</th>';
     }
+    $html .= '<th>Posts</th>'; // Nueva columna para posts
     $html .= '<th>Acciones</th></tr></thead>';
 
     $html .= '<tbody>';
@@ -101,15 +128,42 @@ function generateTableHTML($csvData) {
             $html .= '<td>' . htmlspecialchars($record[$header]) . '</td>';
         }
         
+        // Añadir celda de posts
+        $html .= '<td>';
+        $userPosts = getUserPosts($index);
+        if (!empty($userPosts)) {
+            $html .= '<div class="posts-container">';
+            $html .= '<table class="posts-table">';
+            $html .= '<thead><tr><th>Imagen</th><th>Descripción</th><th>Fecha</th><th>Likes</th><th>Comentarios</th><th>Categoría</th></tr></thead>';
+            $html .= '<tbody>';
+            foreach ($userPosts as $post) {
+                $html .= '<tr>';
+                $html .= '<td><img src="' . htmlspecialchars($post['imagen_url']) . '"></td>';
+                $html .= '<td>' . htmlspecialchars($post['descripcion']) . '</td>';
+                $html .= '<td>' . htmlspecialchars($post['fecha_publicacion']) . '</td>';
+                $html .= '<td>' . htmlspecialchars($post['likes']) . '</td>';
+                $html .= '<td>' . htmlspecialchars($post['comentarios']) . '</td>';
+                $html .= '<td>' . htmlspecialchars($post['categoria']) . '</td>';
+                $html .= '</tr>';
+            }
+            $html .= '</tbody></table>';
+            $html .= '</div>';
+        } else {
+            $html .= '<p>No hay posts</p>';
+        }
+        $html .= '</td>';
+        
+        // Celda de acciones
         $html .= '<td class="actions">';
         $html .= '<a href="index.php?action=view&id=' . $index . '" class="button">Ver</a> ';
         $html .= '<a href="index.php?action=edit&id=' . $index . '" class="button">Editar</a> ';
         $html .= '<a href="index.php?action=delete&id=' . $index . '" class="button" onclick="return confirm(\'¿Estás seguro?\')">Eliminar</a>';
+        $html .= '<a href="index.php?action=add_post&user_id=' . $index . '" class="button">Añadir Post</a>';
         $html .= '</td></tr>';
     }
     $html .= '</tbody></table>';
     
-    // Acciones en masa dentro del mismo formulario
+    // Acciones en masa
     $html .= '<div class="bulk-actions">';
     $html .= '<select name="bulk_action">';
     $html .= '<option value="">Seleccionar acción</option>';
@@ -226,6 +280,26 @@ function generateMultiEditHTML($records, $ids) {
     $html .= '<button type="submit">Guardar Cambios</button>';
     $html .= '<a href="index.php" class="button">Cancelar</a>';
     $html .= '</div></form>';
+    
+    return $html;
+}
+
+function generateAddPostHTML($userId) {
+    $html = '<h2>Añadir Nuevo Post</h2>';
+    $html .= '<form action="index.php?action=add_post&user_id=' . $userId . '" method="post">';
+    $html .= '<div class="form-group">';
+    $html .= '<label for="title">Título:</label>';
+    $html .= '<input type="text" id="title" name="title" required>';
+    $html .= '</div>';
+    
+    $html .= '<div class="form-group">';
+    $html .= '<label for="content">Contenido:</label>';
+    $html .= '<textarea id="content" name="content" rows="4" required></textarea>';
+    $html .= '</div>';
+    
+    $html .= '<button type="submit">Guardar Post</button>';
+    $html .= '<a href="index.php" class="button">Cancelar</a>';
+    $html .= '</form>';
     
     return $html;
 }

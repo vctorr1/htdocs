@@ -189,6 +189,38 @@ switch ($action) {
         header('Location: index.php');
         exit;
 
+        case 'add_post':
+            $userId = isset($_GET['user_id']) ? (int)$_GET['user_id'] : null;
+            
+            if ($userId === null || !isset($csvData['data'][$userId])) {
+                header('Location: index.php');
+                exit;
+            }
+            
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $postsFile = './csv/posts-table.csv';
+                $postsData = readCSV($postsFile);
+                
+                $newPost = [
+                    'user_id' => $userId,
+                    'title' => validateInput($_POST['title']),
+                    'content' => validateInput($_POST['content']),
+                    'date' => date('Y-m-d'),
+                    'likes' => 0
+                ];
+                
+                $postsData['data'][] = $newPost;
+                writeCSV($postsFile, $postsData);
+                
+                header('Location: index.php');
+                exit;
+            }
+            
+            // Mostrar formulario para añadir post
+            $bodyOutput = generateAddPostHTML($userId);
+            include 'templates/create.tlp.php';
+            break;
+
     default:
         // Procesar acciones en masa
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bulk_action']) && !empty($_POST['selected'])) {
