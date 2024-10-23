@@ -17,7 +17,7 @@
     <a href="./create.php"></a>
 
     <!-- Select para elegir la operación a realizar -->
-    <form id="operacion-form">
+    <form id="operacion-form" method="post" action="./index.php">
         <label for="operacion">Seleccionar operación:</label>
         <select id="operacion" name="operacion">
             <option value="eliminar">Eliminar</option>
@@ -28,7 +28,7 @@
 
     <!-- Tabla con registros -->
      <?php $bodyOutput ?>
-    <table>
+    <!--<table>
         <thead>
             <tr>
                 <th>Seleccionar</th>
@@ -65,6 +65,6 @@
                 <td><a href="#" onclick="alert('Visualizar registro 3')">Ver</a></td>
             </tr>
         </tbody>
-    </table>
+    </table>-->
 </body>
 </html>

@@ -1,5 +1,4 @@
 <?php
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -14,10 +13,13 @@ setErrorHandlers();
 $bodyOutput = '';
 
 
+if(isset())
+
+
 
 include('./templates/index.tpl.php');
 
 $registros = getRegistrosFromCSV('./resources/csv/users-table1.csv');
 
-$bodyOutput = 
+$bodyOutput = getTableMarkup($registros);
 ?>

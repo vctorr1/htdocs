@@ -33,7 +33,9 @@ if (empty($csvData['headers'])) {
 //switch principal para manejar diferentes acciones
 switch ($action) {
     case 'add':
+        // Maneja la creación de nuevos registros
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Procesa el formulario de creación
             $newRecord = [];
             foreach ($csvData['headers'] as $header) {
                 $newRecord[$header] = validateInput($_POST[$header] ?? '');
@@ -43,7 +45,7 @@ switch ($action) {
                 header('Location: index.php');
                 exit;
             }
-        }
+        } // Muestra el formulario de creación
         $bodyOutput = generateCreateHTML();
         include 'templates/create.tlp.php';   
         break;

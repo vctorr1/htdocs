@@ -15,8 +15,8 @@ function getRegistrosFromCSV(String $path){
             return $registroDevuelto;
 }
 
-function getTableMarkup(){
-    $cabeceras = array_keys($registro[0]);
+function getTableMarkup($registros){
+    $cabeceras = array_keys($registros[0]);
     $output = '<table>';
     $output = '<thead>';
     foreach($cabeceras as $cabecera){
@@ -26,6 +26,7 @@ function getTableMarkup(){
     $output = '</table>';
     foreach($registros as $item){
         $output .= '<tr>';
+        $output .= '<td><input type="checkbox" name="seleccionado[]" value="item['$abreviatura_id']"></td>';
         foreach ($item as $valorCampo) {
             $output = '<td>'.$valorCampo.'</td>';
         }
