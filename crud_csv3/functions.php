@@ -3,12 +3,13 @@
 //función para leer los datos del csv
 function readCSV($file) {
     $csvData = [
-        'headers' => [], // Array para almacenar los encabezados
-        'data' => []    // Array para almacenar los datos
+        //array asociativo con dos claves
+        'headers' => [], //array para almacenar los encabezados
+        'data' => []    //array para almacenar los datos
     ];
     
     if (($handle = fopen($file, "r")) !== FALSE) {
-        // Guardamos los encabezados
+        //guardamos los encabezados
         $csvData['headers'] = fgetcsv($handle, 1000, ",");
         $index = 0;
         
@@ -78,6 +79,23 @@ function createPostsCSV() {
     }
 }
 
+// Función para generar el siguiente ID
+function getNextId($csvData) {
+    if (empty($csvData['data'])) {
+        return 1;
+    }
+    
+    // Encontrar el ID más alto actual
+    $maxId = 0;
+    foreach ($csvData['data'] as $record) {
+        if (isset($record['id']) && $record['id'] > $maxId) {
+            $maxId = (int)$record['id'];
+        }
+    }
+    
+    return $maxId + 1;
+}
+
 // Función para obtener posts de un usuario específico
 function getUserPosts($userId) {
     $file = './csv/posts-table.csv';
@@ -109,7 +127,7 @@ function generateTableHTML($csvData) {
     }
 
     $html = '<form action="index.php" method="post">';
-    $html .= '<table class="main-table">';
+    $html .= '<table>';
     $html .= '<thead><tr>';
     $html .= '<th></th>'; // Para checkboxes
     
@@ -132,7 +150,6 @@ function generateTableHTML($csvData) {
         $html .= '<td>';
         $userPosts = getUserPosts($index);
         if (!empty($userPosts)) {
-            $html .= '<div class="posts-container">';
             $html .= '<table class="posts-table">';
             $html .= '<thead><tr><th>Imagen</th><th>Descripción</th><th>Fecha</th><th>Likes</th><th>Comentarios</th><th>Categoría</th></tr></thead>';
             $html .= '<tbody>';
@@ -147,31 +164,29 @@ function generateTableHTML($csvData) {
                 $html .= '</tr>';
             }
             $html .= '</tbody></table>';
-            $html .= '</div>';
         } else {
             $html .= '<p>No hay posts</p>';
         }
         $html .= '</td>';
         
         // Celda de acciones
-        $html .= '<td class="actions">';
-        $html .= '<a href="index.php?action=view&id=' . $index . '" class="button">Ver</a> ';
-        $html .= '<a href="index.php?action=edit&id=' . $index . '" class="button">Editar</a> ';
-        $html .= '<a href="index.php?action=delete&id=' . $index . '" class="button" onclick="return confirm(\'¿Estás seguro?\')">Eliminar</a>';
-        $html .= '<a href="index.php?action=add_post&user_id=' . $index . '" class="button">Añadir Post</a>';
+        $html .= '<td>';
+        $html .= '<a href="index.php?action=view&id=' . $index . '">Ver</a> ';
+        $html .= '<a href="index.php?action=edit&id=' . $index . '">Editar</a> ';
+        $html .= '<a href="index.php?action=delete&id=' . $index . '">Eliminar</a>';
+        $html .= '<a href="index.php?action=add_post&user_id=' . $index . '">Añadir Post</a>';
         $html .= '</td></tr>';
     }
     $html .= '</tbody></table>';
     
     // Acciones en masa
-    $html .= '<div class="bulk-actions">';
     $html .= '<select name="bulk_action">';
     $html .= '<option value="">Seleccionar acción</option>';
     $html .= '<option value="delete">Eliminar</option>';
     $html .= '<option value="edit">Editar</option>';
     $html .= '</select>';
     $html .= '<button type="submit">Aplicar a seleccionados</button>';
-    $html .= '</div></form>';
+    $html .= '</form>';
     
     return $html;
 }
@@ -211,21 +226,55 @@ function generateEditHTML($record, $id) {
     
     return $html;
 }
-function generateCreateHTML() {
-    $html = '<h1>Añadir Nuevo Registro</h1>';
-    $html .= '<form action="index.php?action=add" method="post">';
-    $html .= '<input type="text" id="username" name="username" required placeholder="Nombre de usuario"><br>';
-    $html .= '<input type="email" id="email" name="email" required placeholder="Email"><br>';
-    $html .= '<input type="date" id="fecha_registro" name="fecha_registro" required><br>';
-    $html .= '<input type="number" id="seguidores" name="seguidores" value="0" required><br>';
-    $html .= '<input type="number" id="siguiendo" name="siguiendo" value="0" required><br>';
-    $html .= '<textarea id="bio" name="bio" rows="4" cols="50" placeholder="Biografía"></textarea><br>';
-    $html .= '<input type="submit" value="Añadir">';
+function generateCreateHTML($headers) {
+    $html = '<h2>Crear Nuevo Usuario</h2>';
+    $html .= '<form method="POST"';
+    
+    foreach ($headers as $header) {
+        // Saltamos el campo ID ya que se genera automáticamente
+        if ($header !== 'id') {
+            $html .= '<label for="' . htmlspecialchars($header) . '">' . 
+                    ucfirst(htmlspecialchars($header)) . ':</label>';
+            
+            // Personalizar el campo según el tipo
+            switch ($header) {
+                case 'bio':
+                    $html .= '<textarea name="' . htmlspecialchars($header) . '" id="' . 
+                            htmlspecialchars($header) . '" rows="4"></textarea>';
+                    break;
+                    
+                case 'fecha_registro':
+                    $html .= '<input type="date" name="' . htmlspecialchars($header) . 
+                            '" id="' . htmlspecialchars($header) . '" value="' . 
+                            date('Y-m-d') . '">';
+                    break;
+                    
+                case 'seguidores':
+                case 'siguiendo':
+                    $html .= '<input type="number" name="' . htmlspecialchars($header) . 
+                            '" id="' . htmlspecialchars($header) . '" value="0">';
+                    break;
+                    
+                case 'email':
+                    $html .= '<input type="email" name="' . htmlspecialchars($header) . 
+                            '" id="' . htmlspecialchars($header) . '">';
+                    break;
+                    
+                default:
+                    $html .= '<input type="text" name="' . htmlspecialchars($header) . 
+                            '" id="' . htmlspecialchars($header) . '">';
+            }
+            
+        }
+    }
+    
+    $html .= '<button type="submit">Guardar</button>';
+    $html .= '<a href="index.php">Cancelar</a>';
     $html .= '</form>';
-    $html .= '<a href="index.php">Volver a la lista</a>';
     
     return $html;
 }
+
 
 function generateMultiEditHTML($records, $ids) {
     if (empty($records)) {
@@ -236,11 +285,9 @@ function generateMultiEditHTML($records, $ids) {
     $html .= '<form action="index.php?action=multi_edit_save" method="post">';
     
     foreach ($records as $id => $record) {
-        $html .= '<div class="record-edit">';
         $html .= '<h3>Registro #' . ($id + 1) . '</h3>';
         
         foreach ($record as $field => $value) {
-            $html .= '<div class="field-group">';
             $html .= '<label for="' . $field . '_' . $id . '">' . htmlspecialchars($field) . ':</label>';
             
             // Input específico según el tipo de campo
@@ -270,16 +317,13 @@ function generateMultiEditHTML($records, $ids) {
                     $html .= 'value="' . htmlspecialchars($value) . '" required>';
             }
             
-            $html .= '</div>';
         }
         $html .= '<input type="hidden" name="ids[]" value="' . $id . '">';
-        $html .= '</div><hr>';
     }
     
-    $html .= '<div class="actions">';
     $html .= '<button type="submit">Guardar Cambios</button>';
-    $html .= '<a href="index.php" class="button">Cancelar</a>';
-    $html .= '</div></form>';
+    $html .= '<a href="index.php">Cancelar</a>';
+    $html .= '</form>';
     
     return $html;
 }
@@ -287,18 +331,14 @@ function generateMultiEditHTML($records, $ids) {
 function generateAddPostHTML($userId) {
     $html = '<h2>Añadir Nuevo Post</h2>';
     $html .= '<form action="index.php?action=add_post&user_id=' . $userId . '" method="post">';
-    $html .= '<div class="form-group">';
     $html .= '<label for="title">Título:</label>';
     $html .= '<input type="text" id="title" name="title" required>';
-    $html .= '</div>';
     
-    $html .= '<div class="form-group">';
     $html .= '<label for="content">Contenido:</label>';
     $html .= '<textarea id="content" name="content" rows="4" required></textarea>';
-    $html .= '</div>';
     
     $html .= '<button type="submit">Guardar Post</button>';
-    $html .= '<a href="index.php" class="button">Cancelar</a>';
+    $html .= '<a href="index.php">Cancelar</a>';
     $html .= '</form>';
     
     return $html;

@@ -11,42 +11,34 @@ if (!is_dir($csvDir)) {
 //usamos el get para determinar la accion a realizar
 $action = $_GET['action'] ?? 'list';
 $file = './csv/users-table1.csv';
-
-// Si el archivo no existe, lo creamos con los encabezados
-if (!file_exists($file)) {
-    $headers = ['username', 'email', 'fecha_registro', 'seguidores', 'siguiendo', 'bio'];
-    $initialData = [
-        'headers' => $headers,
-        'data' => []
-    ];
-    writeCSV($file, $initialData);
-}
-
 $csvData = readCSV($file);
-
-// Verificar que tenemos los encabezados necesarios
-if (empty($csvData['headers'])) {
-    $csvData['headers'] = ['username', 'email', 'fecha_registro', 'seguidores', 'siguiendo', 'bio'];
-    writeCSV($file, $csvData);
-}
 
 //switch principal para manejar diferentes acciones
 switch ($action) {
     case 'add':
         //creamos los neuvos registros
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Procesa el formulario de creación
-            $newRecord = [];
+            // Generar nuevo ID
+            $newId = getNextId($csvData);
+            
+            // Crear nuevo registro con ID
+            $newRecord = ['id' => $newId];
+            
+            // Añadir resto de campos excepto ID
             foreach ($csvData['headers'] as $header) {
-                $newRecord[$header] = validateInput($_POST[$header] ?? '');
+                if ($header !== 'id') {  // Saltamos el campo ID ya que lo manejamos automáticamente
+                    $newRecord[$header] = validateInput($_POST[$header] ?? '');
+                }
             }
+            
             $csvData['data'][] = $newRecord;
             if (writeCSV($file, $csvData)) {
                 header('Location: index.php');
                 exit;
             }
-        } //mostramos el formulario de creación
-        $bodyOutput = generateCreateHTML();
+        }
+        // Generar HTML del formulario sin campo ID
+        $bodyOutput = generateCreateHTML($csvData['headers']);
         include 'templates/create.tlp.php';   
         break;
 
