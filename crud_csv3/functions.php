@@ -4,9 +4,9 @@
 function readCSV($file)
 {
     $csvData = [
-        //array asociativo con dos claves
+        //dos arrays dentro
         'headers' => [], //array para almacenar los encabezados
-        'data' => []    //array para almacenar los datos
+        'data' => []    //array para almacenar los datos (almacena los id, que almacenan arrays asociativos con los encabezados y registros)
     ];
 
     if (($handle = fopen($file, "r")) !== FALSE) {

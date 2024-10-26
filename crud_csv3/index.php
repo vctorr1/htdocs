@@ -44,7 +44,6 @@ switch ($action) {
 
             $records = [];
 
-            // Itera sobre cada ID recibido
             foreach ($ids as $id) {
                 //casting de los ids a int en todo el programa por seguridad, junto con validateInput
                 $id = (int)$id;
@@ -66,53 +65,42 @@ switch ($action) {
         break;
 
     case 'multi_edit_save':
-        // Verifica que:
-        // 1. La petición sea POST (envío de formulario)
-        // 2. Existan registros en el POST
-        // 3. Existan IDs en el POST
+        //verificamos los datos del post
         if (
             $_SERVER['REQUEST_METHOD'] === 'POST' &&
             isset($_POST['records']) &&
             isset($_POST['ids'])
         ) {
-
-            // Obtiene los registros enviados del formulario
-            // La estructura es: records[id][campo] = valor
-            // Ejemplo: records[0][username] = "nuevo_nombre"
+            //ej: records[1][username] = "victor"
             $records = $_POST['records'];
 
-            // Itera sobre cada registro recibido
             foreach ($records as $id => $record) {
-                // Prepara array para el registro actualizado
                 $updatedRecord = [];
 
                 // Procesa cada campo del registro según los encabezados definidos
                 foreach ($csvData['headers'] as $header) {
-                    // Sanitiza y valida cada campo
-                    // Si el campo no existe, asigna string vacío
+                    //validamos los campos y si no dejamos vacío
                     $updatedRecord[$header] = validateInput($record[$header] ?? '');
                 }
 
-                // Actualiza el registro en el array de datos
-                // La función updateRecord verifica si el ID existe
+                //actualziamos
                 updateRecord($csvData, $id, $updatedRecord);
             }
 
-            // Guarda todos los cambios en el archivo CSV
+            //guardamos los cambios
             writeCSV($file, $csvData);
 
-            // Redirecciona a la página principal tras guardar
             header('Location: index.php');
             exit;
         }
-
-        // Si no se cumplen las condiciones, redirecciona
         header('Location: index.php');
         break;
 
     case 'edit':
+        //obtenemos los ids por get en la url
         $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
         if ($id !== null) {
+            //actualizamos con los datos obtenidos por post
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $updatedRecord = [];
                 foreach ($csvData['headers'] as $header) {
@@ -147,19 +135,13 @@ switch ($action) {
         header('Location: index.php');
         exit;
 
+        //vista detallada
     case 'view':
         $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
         if ($id !== null) {
             $record = findRecord($csvData, $id);
             if ($record) {
-                $bodyOutput = '<h2>Detalles del registro</h2>';
-                $bodyOutput .= '<dl>';
-                foreach ($record as $key => $value) {
-                    $bodyOutput .= '<dt>' . htmlspecialchars($key) . '</dt>';
-                    $bodyOutput .= '<dd>' . htmlspecialchars($value) . '</dd>';
-                }
-                $bodyOutput .= '</dl>';
-                $bodyOutput .= '<a href="index.php" class="button">Volver</a>';
+                $bodyOutput = generateViewHTML($record);
                 include 'templates/view.tlp.php';
                 break;
             }
