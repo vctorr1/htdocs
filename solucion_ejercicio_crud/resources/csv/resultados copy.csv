@@ -1,0 +1,101 @@
+nombre,descripcion,orden,modulo_id,abreviatura_id
+RA1,"Caracteriza la estructura y organización de las administraciones públicas establecidas en la Constitución española y la UE, reconociendo los organismos, instituciones y personas que las integran.",1,GDJE_AFIN_AND,GDJE_AFIN_AND_1
+RA2,"Actualiza periódicamente la información jurídica requerida por la actividad empresarial, seleccionando la legislación y jurisprudencia relacionada con la organización.",2,GDJE_AFIN_AND,GDJE_AFIN_AND_2
+RA3,"Organiza los documentos jurídicos relativos a la constitución y funcionamiento de las entidades, cumpliendo la normativa civil y mercantil vigente según las directrices definidas.",3,GDJE_AFIN_AND,GDJE_AFIN_AND_3
+RA4,"Cumplimenta los modelos de contratación privados más habituales en el ámbito empresarial o documentos de fe pública, aplicando la normativa vigente y los medios informáticos disponibles para su presentación y firma.",4,GDJE_AFIN_AND,GDJE_AFIN_AND_4
+RA5,"Elabora la documentación requerida por los organismos públicos relativos a los distintos procedimientos administrativos, cumpliendo con la legislación vigente y las directrices definidas.",5,GDJE_AFIN_AND,GDJE_AFIN_AND_5
+RA1,"Caracteriza la empresa como una comunidad de personas, distinguiendo las implicaciones éticas de su comportamiento con respecto a los implicados en la misma.",1,RRH_AFIN_AND,RRH_AFIN_AND_1
+RA2,"Contrasta la aplicación de los principios de responsabilidad social corporativa en las políticas de desarrollo de los recursos humanos de las empresas, valorando su adecuación a las buenas prácticas validadas internacionalmente.",2,RRH_AFIN_AND,RRH_AFIN_AND_2
+RA3,"Coordina los flujos de información del departamento de recursos humanos a través de la organización, aplicando habilidades personales y sociales en procesos de gestión de recursos humanos.",3,RRH_AFIN_AND,RRH_AFIN_AND_3
+RA4,"Aplica los procedimientos administrativos relativos a la selección de recursos humanos, eligiendo los métodos e instrumentos más adecuados a la política de cada organización.",4,RRH_AFIN_AND,RRH_AFIN_AND_4
+RA5,"Gestiona los procedimientos administrativos relativos a la formación, promoción y desarrollo de recursos humanos, designando los métodos e instrumentos más adecuados.",5,RRH_AFIN_AND,RRH_AFIN_AND_5
+RA1,"Mantiene en condiciones óptimas de funcionamiento los equipos, aplicaciones y red, instalando y actualizando los componentes hardware y software necesarios.",1,OPI_AFIN_AND,OPI_AFIN_AND_1
+RA2,"Escribe textos alfanuméricos en un teclado extendido, aplicando las técnicas mecanográficas.",2,OPI_AFIN_AND,OPI_AFIN_AND_2
+RA3,"Gestiona los sistemas de archivos, buscando y seleccionando con medios convencionales e informáticos la información necesaria.",3,OPI_AFIN_AND,OPI_AFIN_AND_3
+RA4,"Elabora hojas de cálculo adaptadas a las necesidades que se planteen en el tratamiento de la información, aplicando las opciones avanzadas.",4,OPI_AFIN_AND,OPI_AFIN_AND_4
+RA5,"Elabora documentos de textos, utilizando las opciones avanzadas de un procesador de textos.",5,OPI_AFIN_AND,OPI_AFIN_AND_5
+RA6,"Utiliza sistemas de gestión de bases de datos adaptadas a las necesidades que se planteen en el tratamiento de la información administrativa, aplicando las opciones avanzadas.",6,OPI_AFIN_AND,OPI_AFIN_AND_6
+RA7,"Gestiona integradamente la información proveniente de diferentes aplicaciones así como archivos audiovisuales, utilizando programas y periféricos específicos.",7,OPI_AFIN_AND,OPI_AFIN_AND_7
+RA8,"Gestiona el correo y la agenda electrónica, utilizando aplicaciones específicas.",8,OPI_AFIN_AND,OPI_AFIN_AND_8
+RA9,"Elabora presentaciones multimedia de documentos e informes, utilizando aplicaciones específicas.",9,OPI_AFIN_AND,OPI_AFIN_AND_9
+RA1,"Determina los elementos patrimoniales de la empresa, analizando la actividad empresarial.",1,PIAC_AFIN_AND,PIAC_AFIN_AND_1
+RA2,"Integra la normativa contable y el método de la partida doble, analizando el PGC PYME y la metodología contable.",2,PIAC_AFIN_AND,PIAC_AFIN_AND_2
+RA3,"Gestiona la información sobre tributos que afectan o gravan la actividad comercial de la empresa, seleccionando y aplicando la normativa mercantil y fiscal vigente.",3,PIAC_AFIN_AND,PIAC_AFIN_AND_3
+RA4,"Elabora y organiza la documentación administrativa de las operaciones de compraventa, relacionándola con las transacciones comerciales de la empresa.",4,PIAC_AFIN_AND,PIAC_AFIN_AND_4
+RA5,"Determina los trámites de la gestión de cobros y pagos, analizando la documentación asociada y su flujo dentro de la empresa.",5,PIAC_AFIN_AND,PIAC_AFIN_AND_5
+RA6,"Registra los hechos contables básicos derivados de la actividad comercial y dentro de un ciclo económico, aplicando la metodología contable y los principios y normas del PGC.",6,PIAC_AFIN_AND,PIAC_AFIN_AND_6
+RA7,"Efectúa la gestión y el control de la tesorería, utilizando aplicaciones informáticas.",7,PIAC_AFIN_AND,PIAC_AFIN_AND_7
+RA1,"Caracteriza técnicas de comunicación institucional y promocional, distinguiendo entre internas y externas.",1,CAC_AFIN_AND,CAC_AFIN_AND_1
+RA2,"Realiza comunicaciones orales presenciales y no presenciales, aplicando técnicas de comunicación y adaptándolas a la situación y al interlocutor.",2,CAC_AFIN_AND,CAC_AFIN_AND_2
+RA3,"Elabora documentos escritos de carácter profesional, aplicando criterios lingüísticos, ortográficos y de estilo.",3,CAC_AFIN_AND,CAC_AFIN_AND_3
+RA4,"Determina los procesos de recepción, registro, distribución y recuperación de comunicaciones escritas, aplicando criterios específicos de cada una de estas tareas.",4,CAC_AFIN_AND,CAC_AFIN_AND_4
+RA5,"Aplica técnicas de comunicación, identificando las más adecuadas en la relación y atención a los clientes/usuarios.",5,CAC_AFIN_AND,CAC_AFIN_AND_5
+RA6,"Gestiona consultas, quejas y reclamaciones de posibles clientes, aplicando la normativa vigente.",6,CAC_AFIN_AND,CAC_AFIN_AND_6
+RA7,"Organiza el servicio postventa, relacionándolo con la fidelización del cliente.",7,CAC_AFIN_AND,CAC_AFIN_AND_7
+RA1,"Gestiona la documentación que genera el proceso de contratación, aplicando la normativa vigente.",1,GRH_AFIN_AND,GRH_AFIN_AND_1
+RA2,"Programa las tareas administrativas correspondientes a la modificación, suspensión y extinción del contrato de trabajo, aplicando la normativa vigente y cumplimentando la documentación aparejada.",2,GRH_AFIN_AND,GRH_AFIN_AND_2
+RA3,"Caracteriza las obligaciones administrativas del empresario con la Seguridad Social, tramitando la documentación y realizando los cálculos procedentes.",3,GRH_AFIN_AND,GRH_AFIN_AND_3
+RA4,"Confecciona los documentos derivados del proceso de retribución de recursos humanos y las obligaciones de pagos, aplicando la normativa vigente.",4,GRH_AFIN_AND,GRH_AFIN_AND_4
+RA1,"Determina las necesidades financieras y las ayudas económicas óptimas para la empresa, identificando las alternativas posibles.",1,GF_AFIN_AND,GF_AFIN_AND_1
+RA2,"Clasifica los productos y servicios financieros, analizando sus características y formas de contratación.",2,GF_AFIN_AND,GF_AFIN_AND_2
+RA3,"Evalúa productos y servicios financieros del mercado, realizando los cálculos y elaborando los informes oportunos.",3,GF_AFIN_AND,GF_AFIN_AND_3
+RA4,"Caracteriza la tipología de seguros, analizando la actividad aseguradora.",4,GF_AFIN_AND,GF_AFIN_AND_4
+RA5,"Selecciona inversiones en activos financieros o económicos, analizando sus características y realizando los cálculos oportunos.",5,GF_AFIN_AND,GF_AFIN_AND_5
+RA6,"Integra los presupuestos parciales de las áreas funcionales y/o territoriales de la empresa/organización, verificando la información que contienen.",6,GF_AFIN_AND,GF_AFIN_AND_6
+RA1,"Contabiliza en soporte informático los hechos contables derivados de las operaciones de trascendencia económico-financiera de una empresa, cumpliendo con los criterios establecidos en el Plan General de Contabilidad (PGC).",1,CF_AFIN_AND,CF_AFIN_AND_1
+RA2,"Realiza la tramitación de las obligaciones fiscales y contables relativas al Impuesto de Sociedades y el Impuesto sobre la Renta de las Personas Físicas, aplicando la normativa de carácter mercantil y fiscal vigente.",2,CF_AFIN_AND,CF_AFIN_AND_2
+RA3,"Registra contablemente las operaciones derivadas del fin del ejercicio económico a partir de la información y documentación de un ciclo económico completo, aplicando los criterios del PGC y la legislación vigente.",3,CF_AFIN_AND,CF_AFIN_AND_3
+RA4,"Confecciona las cuentas anuales y verifica los trámites para su depósito en el Registro Mercantil, aplicando la legislación mercantil vigente.",4,CF_AFIN_AND,CF_AFIN_AND_4
+RA5,"Elabora informes de análisis sobre la situación económica-financiera y patrimonial de una empresa, interpretando los estados contables.",5,CF_AFIN_AND,CF_AFIN_AND_5
+RA6,"Caracteriza el proceso de auditoría en la empresa, describiendo su propósito dentro del marco normativo español.",6,CF_AFIN_AND,CF_AFIN_AND_6
+RA1,"Reconoce información profesional y cotidiana contenida en todo tipo de discursos orales emitidos por cualquier medio de comunicación en lengua estándar, interpretando con precisión el contenido del mensaje.",1,INGL_AFIN_AND,INGL_AFIN_AND_1
+RA2,"Interpreta información profesional contenida en textos escritos complejos, analizando de forma comprensiva sus contenidos.",2,INGL_AFIN_AND,INGL_AFIN_AND_2
+RA3,"Emite mensajes orales claros y bien estructurados, analizando el contenido de la situación y adaptándose al registro lingüístico del interlocutor.",3,INGL_AFIN_AND,INGL_AFIN_AND_3
+RA4,"Elabora documentos e informes propios del sector o de la vida académica y cotidiana, relacionando los recursos lingüísticos con el propósito del mismo.",4,INGL_AFIN_AND,INGL_AFIN_AND_4
+RA5,"Aplica actitudes y comportamientos profesionales en situaciones de comunicación, describiendo las relaciones típicas características del país de la lengua extranjera.",5,INGL_AFIN_AND,INGL_AFIN_AND_5
+RA1,"Elabora planes de aprovisionamiento, analizando información de las distintas áreas de la organización o empresa.",1,GLC_AFIN_AND,GLC_AFIN_AND_1
+RA2,"Realiza procesos de selección de proveedores, analizando las condiciones técnicas y los parámetros habituales.",2,GLC_AFIN_AND,GLC_AFIN_AND_2
+RA3,"Planifica la gestión de las relaciones con los proveedores, aplicando técnicas de negociación y comunicación.",3,GLC_AFIN_AND,GLC_AFIN_AND_3
+RA4,"Programa el seguimiento documental y los controles del proceso de aprovisionamiento, aplicando los mecanismos previstos en el programa y utilizando aplicaciones informáticas.",4,GLC_AFIN_AND,GLC_AFIN_AND_4
+RA5,"Define las fases y operaciones que deben realizarse dentro de la cadena logística, asegurándose la trazabilidad y calidad en el seguimiento de la mercancía.",5,GLC_AFIN_AND,GLC_AFIN_AND_5
+RA1,"Determina los factores de la innovación empresarial, relacionándolos con la actividad de creación de empresas.",1,SE_AFIN_AND,SE_AFIN_AND_1
+RA2,"Selecciona una idea de negocio, analizando el mercado.",2,SE_AFIN_AND,SE_AFIN_AND_2
+RA3,"Determina la organización interna de la empresa, la forma jurídica y los recursos necesarios, analizando las alternativas disponibles y los objetivos marcados con el proyecto.",3,SE_AFIN_AND,SE_AFIN_AND_3
+RA4,"Comprueba la viabilidad de la empresa mediante diferentes tipos de análisis, verificando los diversos factores que pueden influir en la misma.",4,SE_AFIN_AND,SE_AFIN_AND_4
+RA5,"Gestiona la documentación necesaria para la puesta en marcha de una empresa, analizando los trámites legales y las actuaciones necesarias que conllevan la realización del proyecto empresarial.",5,SE_AFIN_AND,SE_AFIN_AND_5
+RA6,Realiza la gestión de la empresa-proyecto en sus diversos departamentos.,6,SE_AFIN_AND,SE_AFIN_AND_6
+RA1,"Identifica necesidades del sector productivo, relacionándolas con proyectos tipo que las puedan satisfacer.",1,PAF_AFIN_AND,PAF_AFIN_AND_1
+RA2,"Diseña proyectos relacionados con las competencias expresadas en el título, incluyendo y desarrollando las fases que lo componen.",2,PAF_AFIN_AND,PAF_AFIN_AND_2
+RA3,"Planifica la ejecución del proyecto, determinando el plan de intervención y la documentación asociada.",3,PAF_AFIN_AND,PAF_AFIN_AND_3
+RA4,"Define los procedimientos para el seguimiento y control en la ejecución del proyecto, justificando la selección de variables e instrumentos empleados.",4,PAF_AFIN_AND,PAF_AFIN_AND_4
+RA1,"Selecciona oportunidades de empleo, identificando las diferentes posibilidades de inserción, y las alternativas de aprendizaje a lo largo de la vida.",1,FOL_AFIN_AND,FOL_AFIN_AND_1
+RA2,"Aplica las estrategias del trabajo en equipo, valorando su eficacia y eficiencia para la consecución de los objetivos de la organización.",2,FOL_AFIN_AND,FOL_AFIN_AND_2
+RA3,"Ejerce los derechos y cumple las obligaciones que se derivan de las relaciones laborales, reconociéndolas en los diferentes contratos de trabajo.",3,FOL_AFIN_AND,FOL_AFIN_AND_3
+RA4,"Determina la acción protectora del sistema de la Seguridad Social ante las distintas contingencias cubiertas, identificando las distintas clases de prestaciones.",4,FOL_AFIN_AND,FOL_AFIN_AND_4
+RA5,"Evalúa los riesgos derivados de su actividad, analizando las condiciones de trabajo y los factores de riesgo presentes en su entorno laboral.",5,FOL_AFIN_AND,FOL_AFIN_AND_5
+RA6,"Participa en la elaboración de un plan de prevención de riesgos en la empresa, identificando las responsabilidades de todos los agentes implicados.",6,FOL_AFIN_AND,FOL_AFIN_AND_6
+RA7,"Aplica las medidas de prevención y protección, analizando las situaciones de riesgo en el entorno laboral del técnico superior en Administración y Finanzas.",7,FOL_AFIN_AND,FOL_AFIN_AND_7
+RA1,"Identifica la estructura y organización de la empresa, relacionándolas con el tipo de servicio que presta.",1,FCT_AFIN_AND,FCT_AFIN_AND_1
+RA2,"Aplica hábitos éticos y laborales en el desarrollo de su actividad profesional, de acuerdo con las características del puesto de trabajo y con los procedimientos establecidos en la empresa.",2,FCT_AFIN_AND,FCT_AFIN_AND_2
+RA3,"Elabora y tramita todo tipo de documentos relacionados con las áreas administrativas de la empresa, empleando medios, equipos e instrumentos de control, según los procedimientos de la empresa y el sector.",3,FCT_AFIN_AND,FCT_AFIN_AND_3
+RA4,"Realiza la gestión de procesos administrativos de todos los ámbitos de la empresa, proponiendo líneas de actuación y supervisando las tareas del equipo a su cargo.",4,FCT_AFIN_AND,FCT_AFIN_AND_4
+RA1,"Evalúa sistemas informáticos, identificando sus componentes y características.",1,SI_DAW_MEC,SI_DAW_MEC_1
+RA2,Instala sistemas operativos planificando el proceso e interpretando documentación técnica.,2,SI_DAW_MEC,SI_DAW_MEC_2
+RA3,Gestiona la información del sistema identificando las estructuras de almacenamiento y aplicando medidas para asegurar la integridad de los datos.,3,SI_DAW_MEC,SI_DAW_MEC_3
+RA4,Gestiona sistemas operativos utilizando comandos y herramientas gráficas y evaluando las necesidades del sistema.,4,SI_DAW_MEC,SI_DAW_MEC_4
+RA5,Interconecta sistemas en red configurando dispositivos y protocolos.,5,SI_DAW_MEC,SI_DAW_MEC_5
+RA6,Opera sistemas en red gestionando sus recursos e identificando las restricciones de seguridad existentes.,6,SI_DAW_MEC,SI_DAW_MEC_6
+RA7,Elabora documentación valorando y utilizando aplicaciones informáticas de propósito general.,7,SI_DAW_MEC,SI_DAW_MEC_7
+RA1,Reconoce los elementos de las bases de datos analizando sus funciones y valorando la utilidad de los sistemas gestores.,1,BD_DAW_MEC,BD_DAW_MEC_1
+RA2,Crea bases de datos definiendo su estructura y las características de sus elementos según el modelo relacional.,2,BD_DAW_MEC,BD_DAW_MEC_2
+RA3,"Consulta la información almacenada en una base de datos empleando asistentes, herramientas gráficas y el lenguaje de manipulación de datos.",3,BD_DAW_MEC,BD_DAW_MEC_3
+RA4,"Modifica la información almacenada en la base de datos utilizando asistentes, herramientas gráficas y el lenguaje de manipulación de datos.",4,BD_DAW_MEC,BD_DAW_MEC_4
+RA5,Desarrolla procedimientos almacenados evaluando y utilizando las sentencias del lenguaje incorporado en el sistema gestor de bases de datos.,5,BD_DAW_MEC,BD_DAW_MEC_5
+RA6,Diseña modelos relacionales normalizados interpretando diagramas entidad/relación.,6,BD_DAW_MEC,BD_DAW_MEC_6
+RA7,"Gestiona la información almacenada en bases de datos no relacionales, evaluando y utilizando las posibilidades que proporciona el sistema gestor.",7,BD_DAW_MEC,BD_DAW_MEC_7
+RA1,"Reconoce la estructura de un programa informático, identificando y relacionando los elementos propios del lenguaje de programación utilizado.",1,PRO_DAW_MEC,PRO_DAW_MEC_1
+RA2,"Escribe y prueba programas sencillos, reconociendo y aplicando los fundamentos de la programación orientada a objetos.",2,PRO_DAW_MEC,PRO_DAW_MEC_2
+RA3,"Escribe y depura código, analizando y utilizando las estructuras de control del lenguaje.",3,PRO_DAW_MEC,PRO_DAW_MEC_3
+RA4,Desarrolla programas organizados en clases analizando y aplicando los principios de la programación orientada a objetos.,4,PRO_DAW_MEC,PRO_DAW_MEC_4
+RA5,"Realiza operaciones de entrada y salida de información, utilizando procedimientos específicos del lenguaje y librerías de clases.",5,PRO_DAW_MEC,PRO_DAW_MEC_5
+RA6,Escribe programas que manipulen información seleccionando y utilizando tipos avanzados de datos.,6,PRO_DAW_MEC,PRO_DAW_MEC_6
