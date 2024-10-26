@@ -2,12 +2,6 @@
 //Incluimos el archivo de funciones
 require_once 'functions.php';
 
-// Verificamos que el directorio csv existe
-$csvDir = './csv';
-if (!is_dir($csvDir)) {
-    mkdir($csvDir, 0777, true);
-}
-
 //usamos el get para determinar la accion a realizar
 $action = $_GET['action'] ?? 'list';
 $file = './csv/users-table1.csv';
