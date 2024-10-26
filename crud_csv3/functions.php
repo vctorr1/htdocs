@@ -93,20 +93,7 @@ function deleteRecord(&$csvData, $id)
     }
     return false;
 }
-function createPostsCSV()
-{
-    $file = './csv/posts-table.csv';
-    if (!file_exists($file)) {
-        $headers = ['id', 'user_id', 'imagen_url', 'descripcion', 'fecha_publicacion', 'likes', 'comentarios', 'categorias'];
-        $initialData = [
-            'headers' => $headers,
-            'data' => []
-        ];
-        writeCSV($file, $initialData);
-    }
-}
-
-//funcion para cerar el id sin formulario
+//funcion para calcular el nuevo id
 function getNextId($csvData)
 {
     if (empty($csvData['data'])) {
@@ -205,7 +192,6 @@ function generateTableHTML($csvData)
         $html .= '<a href="index.php?action=view&id=' . $index . '">Ver</a> ';
         $html .= '<a href="index.php?action=edit&id=' . $index . '">Editar</a> ';
         $html .= '<a href="index.php?action=delete&id=' . $index . '">Eliminar</a>';
-        $html .= '<a href="index.php?action=add_post&user_id=' . $index . '">Añadir Post</a>';
         $html .= '</td></tr>';
     }
     $html .= '</tbody></table>';
@@ -222,7 +208,7 @@ function generateTableHTML($csvData)
     return $html;
 }
 
-
+//markup de la vista detallada
 function generateViewHTML($record)
 {
     $html = '<h1>Detalles del Registro</h1>';
@@ -349,23 +335,6 @@ function generateMultiEditHTML($records, $ids)
     }
 
     $html .= '<button type="submit">Guardar Cambios</button>';
-    $html .= '<a href="index.php">Cancelar</a>';
-    $html .= '</form>';
-
-    return $html;
-}
-
-function generateAddPostHTML($userId)
-{
-    $html = '<h2>Añadir Nuevo Post</h2>';
-    $html .= '<form action="index.php?action=add_post&user_id=' . $userId . '" method="post">';
-    $html .= '<label for="title">Título:</label>';
-    $html .= '<input type="text" id="title" name="title" required>';
-
-    $html .= '<label for="content">Contenido:</label>';
-    $html .= '<textarea id="content" name="content" rows="4" required></textarea>';
-
-    $html .= '<button type="submit">Guardar Post</button>';
     $html .= '<a href="index.php">Cancelar</a>';
     $html .= '</form>';
 
