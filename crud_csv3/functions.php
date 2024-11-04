@@ -171,6 +171,7 @@ function generateTableHTML($csvData)
             $html .= '<table class="posts-table">';
             $html .= '<thead><tr><th>Imagen</th><th>Descripción</th><th>Fecha</th><th>Likes</th><th>Comentarios</th><th>Categoría</th></tr></thead>';
             $html .= '<tbody>';
+
             foreach ($userPosts as $post) {
                 $html .= '<tr>';
                 $html .= '<td><img src="' . htmlspecialchars($post['imagen_url']) . '"></td>';
