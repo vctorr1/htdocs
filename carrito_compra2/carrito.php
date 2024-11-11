@@ -1,11 +1,7 @@
 <?php
 session_start();
 
-$productos = [
-    1 => ['id' => 1, 'nombre' => 'Producto 1', 'precio' => 10.99],
-    2 => ['id' => 2, 'nombre' => 'Producto 2', 'precio' => 20.99],
-    3 => ['id' => 3, 'nombre' => 'Producto 3', 'precio' => 15.99]
-];
+require_once'productos.php';
 
 if (!isset($_SESSION['carrito'])) {
     $_SESSION['carrito'] = [];
