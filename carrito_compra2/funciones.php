@@ -1,20 +1,41 @@
 <?php
 
 //método de inicio de sesión
-function login(){
+function login()
+{
     if (!isset($_SERVER['PHP_AUTH_USER'])) {
         header('WWW-Authenticate: Basic realm="carrito_compra"');
         header('HTTP/1.0 401 Unauthorized');
-        $html = 'Has cancelado el inicio de sesión';
+        //$html = 'Has cancelado el inicio de sesión';
         exit;
     } else {
-        $html = "<p>Hola {$_SERVER['PHP_AUTH_USER']}.</p>";
-        $html .= "<p>Has introducido {$_SERVER['PHP_AUTH_PW']} como contraseña</p>";
-        $_SESSION["user"] = $_SERVER['PHP_AUTH_USER'];
-        $_SESSION["password"] = $_SERVER['PHP_AUTH_PW'];
+        /*$html = "<p>Hola {$_SERVER['PHP_AUTH_USER']}.</p>";
+        $html .= "<p>Has introducido {$_SERVER['PHP_AUTH_PW']} como contraseña</p>";*/
+        /*$_SESSION["user"] = $_SERVER['PHP_AUTH_USER'];
+        $_SESSION["password"] = $_SERVER['PHP_AUTH_PW'];*/
+        $usuario = "victor";
+        $contraseña = "daw";
+        $usuario = $_SERVER['PHP_AUTH_USER'];
+        $contraseña = $_SERVER['PHP_AUTH_PW'];
         //print($_SESSION);
+        //include 'templates/carrito.tlp.php';
     }
     //redirige a la plantilla del carrito al terminar
-    include 'templates/carrito.tlp.php';
+    //include 'templates/carrito.tlp.php';
+}
+
+function getCarrito()
+{
+    if (!isset($_SESSION['carrito'])) {
+        $_SESSION['carrito'] = [];
+    }
+}
+
+//TODO: funciones para generar el html
+function printProductsHTML(){
     
+}
+
+function printCarritoHTML(){
+
 }

@@ -7,10 +7,11 @@ $productos = [
     4 => ['id' => 4, 'nombre' => 'Calcetines', 'precio' => 9.99]
 ];
 
-foreach ($productos as $key => $value) {
+/*DEBUGGING */
+/*foreach ($productos as $key => $value) {
     print("<br>");
     foreach ($value as $clave => $valor) {
         print($valor." ");
     }
 }
-print($productos['1']['nombre']);
+print($productos['1']['nombre']);*/
