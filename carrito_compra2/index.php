@@ -1,17 +1,20 @@
 <?php
 session_start();
 
-//login
-require_once'funciones.php';
+// login
+require_once 'funciones.php';
 // Array de productos
-require_once'productos.php';
+require_once 'productos.php';
 
 login();
 
-//inicializar carrito si no existe
+// inicializar carrito si no existe
 getCarrito();
 
-//procesar acciones del carrito
+// Genera el HTML de la lista de productos y lo asigna a $bodyOutput
+$bodyOutput = printProductsHTML($productos);
+
+// Procesar acciones del carrito
 if (isset($_POST['accion'])) {
     $id = $_POST['id'];
     $cantidad = isset($_POST['cantidad']) ? (int)$_POST['cantidad'] : 1;
@@ -24,7 +27,6 @@ if (isset($_POST['accion'])) {
                 $_SESSION['carrito'][$id] = $cantidad;
             }
             break;
-            
         case 'actualizar':
             if ($cantidad <= 0) {
                 unset($_SESSION['carrito'][$id]);
@@ -33,11 +35,11 @@ if (isset($_POST['accion'])) {
             }
             break;
     }
-    
+
     header('Location: ' . ($_POST['accion'] === 'agregar' ? 'index.php' : 'carrito.php'));
     exit;
 }
 
-include_once'templates/productos.tlp.php';
-
+// Incluye la plantilla de productos y muestra la lista de productos generada
+include_once 'templates/productos.tlp.php';
 ?>

@@ -8,44 +8,10 @@
 </head>
 
 <body>
-    <h1>Tu Carrito</h1>
+    <h1>Productos en el carrito</h1>
 
-    <?php if (empty($_SESSION['carrito'])): ?>
-        <p>El carrito está vacío</p>
-    <?php else: ?>
-        <?php
-        $total = 0;
-        foreach ($_SESSION['carrito'] as $id => $cantidad):
-            if (isset($productos[$id])):
-                $total += $productos[$id]['precio'] * $cantidad;
-        ?>
-                <div class="item">
-                    <h3><?php echo $productos[$id]['nombre']; ?></h3>
-                    <p>Precio: €<?php echo $productos[$id]['precio']; ?></p>
-
-                    <form method="post" action="index.php">
-                        <input type="hidden" name="id" value="<?php echo $id; ?>">
-                        <input type="hidden" name="accion" value="actualizar">
-
-                        <div class="controles">
-                            <button type="button" onclick="restar(this)">-</button>
-                            <input type="number" name="cantidad" value="<?php echo $cantidad; ?>" min="0" style="width: 50px">
-                            <button type="button" onclick="sumar(this)">+</button>
-                            <button type="submit">Actualizar</button>
-                        </div>
-                    </form>
-
-                    <p>Subtotal: €<?php echo number_format($productos[$id]['precio'] * $cantidad, 2); ?></p>
-                </div>
-        <?php
-            endif;
-        endforeach;
-        ?>
-
-        <div class="total">
-            Total: €<?php echo number_format($total, 2); ?>
-        </div>
-    <?php endif; ?>
+    <?php echo $bodyOutput; // Aquí se imprime el contenido del carrito generado por printCarritoHTML 
+    ?>
 
     <p>
         <button onclick="window.location.href='index.php'">Seguir comprando</button>
@@ -55,6 +21,7 @@
         function sumar(btn) {
             let input = btn.parentNode.querySelector('input');
             input.value = parseInt(input.value) + 1;
+            btn.closest('form').submit();
         }
 
         function restar(btn) {
@@ -62,10 +29,7 @@
             let valor = parseInt(input.value) - 1;
             if (valor >= 0) {
                 input.value = valor;
-                // Si estamos en el carrito y la cantidad es 0, enviamos el formulario
-                if (valor === 0 && window.location.pathname.includes('carrito.php')) {
-                    btn.closest('form').submit();
-                }
+                btn.closest('form').submit(); // Enviar formulario automáticamente al restar
             }
         }
     </script>
