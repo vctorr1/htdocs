@@ -32,6 +32,7 @@ function printProductsHTML($productos) {
         $html .= "<div class='controles'><button type='button' onclick='restar(this)'>-</button>";
         $html .= "<input type='number' name='cantidad' value='1' min='1'><button type='button' onclick='sumar(this)'>+</button></div>";
         $html .= "<button type='submit'>Añadir al carrito</button></form></div>";
+        //al darle a añadir el carrito el formulario se envía al index por post
     }
     return $html;
 }
@@ -54,5 +55,6 @@ function printCarritoHTML($productos) {
     }
     $html .= "<div class='total'>Total: " . number_format($total, 2) . " €</div>";
     return $html;
+    
 }
 ?>

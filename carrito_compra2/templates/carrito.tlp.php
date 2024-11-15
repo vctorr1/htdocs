@@ -17,6 +17,7 @@
         <button onclick="window.location.href='index.php'">Seguir comprando</button>
     </p>
 
+    <!-- botones con js-->
     <script>
         function sumar(btn) {
             let input = btn.parentNode.querySelector('input');

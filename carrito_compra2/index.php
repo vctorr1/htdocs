@@ -1,9 +1,7 @@
 <?php
 session_start();
 
-// login
 require_once 'funciones.php';
-// Array de productos
 require_once 'productos.php';
 
 login();
@@ -16,7 +14,7 @@ $bodyOutput = printProductsHTML($productos);
 // switch para las acciones del producto
 if (isset($_POST['accion'])) {
     $id = $_POST['id'];
-    $cantidad = isset($_POST['cantidad']) ? (int)$_POST['cantidad'] : 1;
+    $cantidad = isset($_POST['cantidad']) ? $_POST['cantidad'] : 1;
 
     switch ($_POST['accion']) {
         case 'agregar':
