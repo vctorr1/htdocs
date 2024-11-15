@@ -8,7 +8,7 @@
 <body>
     <h1>Productos disponibles</h1>
     
-    <?php echo $bodyOutput; // Aquí se imprime la lista generada por printProductsHTML ?>
+    <?php echo $bodyOutput; //lista de productos ?>
 
     <p>
         <button onclick="window.location.href='carrito.php'">Ver carrito</button>

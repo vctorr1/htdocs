@@ -6,6 +6,6 @@ require_once 'productos.php';
 
 getCarrito();
 
-// Generar el HTML del carrito con los productos en el array global `$productos`
+// se genera el html del carrito
 $bodyOutput = printCarritoHTML($productos);
 include_once 'templates/carrito.tlp.php';

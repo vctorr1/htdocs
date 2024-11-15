@@ -15,6 +15,7 @@ function login() {
     }
 }
 
+//funcion para obtener el carrito y crearlo si no existe
 function getCarrito() {
     if (!isset($_SESSION['carrito'])) {
         $_SESSION['carrito'] = [];
@@ -48,10 +49,10 @@ function printCarritoHTML($productos) {
             $html .= "<div class='controles'><button type='button' onclick='restar(this)'>-</button>";
             $html .= "<input type='number' name='cantidad' value='$cantidad' min='0'>";
             $html .= "<button type='button' onclick='sumar(this)'>+</button><button type='submit'>Actualizar</button></form>";
-            $html .= "<p>Subtotal: €" . number_format($subtotal, 2) . "</p></div>";
+            $html .= "<p>Subtotal: €" . number_format($subtotal, 2) . " €</p></div>";
         }
     }
-    $html .= "<div class='total'>Total: €" . number_format($total, 2) . "</div>";
+    $html .= "<div class='total'>Total: " . number_format($total, 2) . " €</div>";
     return $html;
 }
 ?>

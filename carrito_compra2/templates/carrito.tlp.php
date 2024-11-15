@@ -10,7 +10,7 @@
 <body>
     <h1>Productos en el carrito</h1>
 
-    <?php echo $bodyOutput; // Aquí se imprime el contenido del carrito generado por printCarritoHTML 
+    <?php echo $bodyOutput; //productos en el carrito 
     ?>
 
     <p>
@@ -29,7 +29,7 @@
             let valor = parseInt(input.value) - 1;
             if (valor >= 0) {
                 input.value = valor;
-                btn.closest('form').submit(); // Enviar formulario automáticamente al restar
+                btn.closest('form').submit(); //el formulario se envía solo si se resta por debajo de 1
             }
         }
     </script>

@@ -11,10 +11,9 @@ login();
 // inicializar carrito si no existe
 getCarrito();
 
-// Genera el HTML de la lista de productos y lo asigna a $bodyOutput
 $bodyOutput = printProductsHTML($productos);
 
-// Procesar acciones del carrito
+// switch para las acciones del producto
 if (isset($_POST['accion'])) {
     $id = $_POST['id'];
     $cantidad = isset($_POST['cantidad']) ? (int)$_POST['cantidad'] : 1;
@@ -40,6 +39,5 @@ if (isset($_POST['accion'])) {
     exit;
 }
 
-// Incluye la plantilla de productos y muestra la lista de productos generada
+// plantilla de productos
 include_once 'templates/productos.tlp.php';
-?>
