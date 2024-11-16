@@ -13,16 +13,15 @@
     <?php echo $bodyOutput; //productos en el carrito 
     ?>
 
-    <p>
-        <button onclick="window.location.href='index.php'">Seguir comprando</button>
-    </p>
-
     <!-- botones con js-->
     <script>
+
+        //TODO: hacer que los botones actualicen automaticamente pero sin usar javascript
         function sumar(btn) {
             let input = btn.parentNode.querySelector('input');
             input.value = parseInt(input.value) + 1;
             btn.closest('form').submit();
+            
         }
 
         function restar(btn) {

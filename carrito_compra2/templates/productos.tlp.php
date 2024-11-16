@@ -10,10 +10,6 @@
     
     <?php echo $bodyOutput; //lista de productos ?>
 
-    <p>
-        <button onclick="window.location.href='carrito.php'">Ver carrito</button>
-    </p>
-
     <!-- botones con js-->
     <script>
         function sumar(btn) {
